@@ -1,15 +1,26 @@
-import { Component } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Navigator } from '@tarojs/components'
-import MySwiper from './Swiper'
-import './index.css'
-import img from '../../asset/image/person2.png'
-import Footer from '../../compoents/footer'
+import MySwiper from '../../components/MySwiper'
+import './index.less'
+import Footer from '../../components/footer'
+import service from './service'
+import mockData from '../../mock/index'
 
 export default class Index extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      banner: [],
+      products: []
+    }
+  }
 
   componentWillMount() { }
 
-  componentDidMount() { }
+  componentDidMount() {
+    this.getProducts()
+    this.getBanner()
+  }
 
   componentWillUnmount() { }
 
@@ -17,37 +28,61 @@ export default class Index extends Component {
 
   componentDidHide() { }
 
+  getBanner() {
+    this.setState({ loading: true })
+    service.getBanner().then(res => {
+      this.setState({ banner: res.data })
+    }).catch(err => {
+      this.setState({ banner: mockData.banners })
+    })
+  }
+
+  getProducts() {
+    service.getProduct().then(res => {
+      this.setState({ products: res.data })
+    }).catch(err => {
+      this.setState({ products: mockData.products })
+    })
+  }
+
   config = {
     navigationBarTitleText: '南山楠'
   }
 
   render() {
-    const list = ['新品', '二次元', '动漫', '卡通', '番剧']
+    const products = this.state.products
     return (
       <View className='home'>
-        <MySwiper />
-        {list.map(v => (
-          <View className='content' key={v}>
-            <Text className='title'>{v}</Text>
+        <MySwiper banner={this.state.banner} />
+        {products.map(v => (
+          <View className='content' key={v.id}>
+            <View className='title'>
+              <Text>
+                {v.title}
+              </Text>
+              <Navigator className="more" openType='switchTab' url={`/pages/product/index?type=${v.type}`}>
+                更多
+              </Navigator>
+            </View>
             <View className='list'>
               <View>
                 <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={img} />
+                  <Image src={v.image_url} />
                 </Navigator>
               </View>
               <View>
                 <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={img} />
+                  <Image src={v.image_url} />
                 </Navigator>
               </View>
               <View>
                 <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={img} />
+                  <Image src={v.image_url} />
                 </Navigator>
               </View>
               <View>
                 <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={img} />
+                  <Image src={v.image_url} />
                 </Navigator>
               </View>
             </View>
