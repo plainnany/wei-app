@@ -1,9 +1,8 @@
 import Taro from '@tarojs/taro'
-import dva from 'dva-core'
+import { create } from 'dva-core'
 // import { createLogger } from 'redux-logger'
 import createLoading from 'dva-loading'
 
-console.log(dva)
 let app
 let store
 let dispatch
@@ -11,8 +10,7 @@ let dispatch
 function createApp(opt) {
   // redux日志
   // opt.onAction = [createLogger()]
-  // app = create(opt)
-  app = {}
+  app = create(opt)
   app.use(createLoading({}))
 
   // 适配支付宝小程序

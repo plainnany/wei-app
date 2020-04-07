@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import './index.css'
+import './index.less'
+import mockData from '../../mock'
 
 export default class Index extends Component {
 
@@ -19,9 +20,11 @@ export default class Index extends Component {
   }
 
   render() {
+    const productImage = mockData.productDetail[`${parseInt(Math.random() * 3)}`]
+
     return (
-      <View className='index'>
-        <Text>产品详情</Text>
+      <View className='product-detail-page'>
+        <Image src={productImage} />
       </View>
     )
   }

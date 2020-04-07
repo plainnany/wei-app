@@ -7,7 +7,7 @@ export default class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: '',
+      activeTab: 'new',
       products: []
     }
   }
@@ -15,8 +15,7 @@ export default class Index extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    console.log(this.props)
-    this.getProduct()
+    this.getProduct('new')
   }
 
   componentWillUnmount() { }
@@ -63,8 +62,8 @@ export default class Index extends Component {
                   <View>
                     <Navigator openType='navigate' url={`/pages/productDetail/index?id=${v.id}`}>
                       <Image src={v.image_url} />
-                      <View className='ellipsis'><Text>这是标题标题标题</Text></View>
-                      <View className='ellipsis'><Text className='desc'>描述信息</Text> </View>
+                      <View className='ellipsis'><Text>{v.title}</Text></View>
+                      <View className='ellipsis'><Text className='desc'>{v.description}</Text> </View>
                     </Navigator>
                   </View>
                 </View>

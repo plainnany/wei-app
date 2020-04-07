@@ -1,17 +1,15 @@
 import Taro, { Component } from '@tarojs/taro'
 import Index from './pages/index/index'
 import models from './models/index'
-// import dva from './utils/dva'
+import dva from './utils/dva'
 import { Provider } from '@tarojs/redux'
 
 import './styles/base.less'
-
-// const dvaApp = dva.createApp({
-//   initialState: {},
-//   models: models,
-// })
-// const store = dvaApp.getStore()
-const store = {}
+const dvaApp = dva.createApp({
+  initialState: {},
+  models: models,
+})
+const store = dvaApp.getStore()
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -35,6 +33,9 @@ class App extends Component {
       'pages/product/index',
       'pages/user/index',
       'pages/login/index',
+      'pages/about/index',
+      'pages/score/index',
+      'pages/addressList/index',
       'pages/productDetail/index',
     ],
     tabBar: {

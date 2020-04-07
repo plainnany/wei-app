@@ -18,30 +18,32 @@ class User extends Component {
   }
 
   goPage = e => {
-    if (
-      e.currentTarget.dataset.url == '/pages/login/index' &&
-      this.props.access_token
-    ) {
-      return
-    }
+    // if (
+    //   e.currentTarget.dataset.url == '/pages/login/index' &&
+    //   this.props.access_token
+    // ) {
+    //   return
+    // }
     Taro.navigateTo({
       url: e.currentTarget.dataset.url,
     })
   }
 
   goToPage = e => {
-    if (!this.props.access_token) {
-      Taro.navigateTo({
-        url: '/pages/login/index',
-      })
-      return
-    }
+    // if (!this.props.access_token) {
+    //   Taro.navigateTo({
+    //     url: '/pages/login/index',
+    //   })
+    //   return
+    // }
     Taro.navigateTo({
       url: e.currentTarget.dataset.url,
     })
   }
 
   outLogin = e => {
+    // test
+    return
     e.stopPropagation()
     if (!this.props.access_token) {
       Taro.navigateTo({
@@ -87,14 +89,18 @@ class User extends Component {
   }
 
   render() {
-    const { mobile, coupon_number, nickname, list } = this.props
+    let { mobile, coupon_number, nickname, list } = this.props
+    // const mobile = true
+    // const coupon_number = 10
+    nickname = '系统账号'
+    mobile = true
     return (
       <View className="user-page">
         <View className="not-login">
           <View
             className="to-login"
             data-url="/pages/login/index"
-            onClick={this.goPage}
+          // onClick={this.goPage}
           >
             <View className="left">
               <View className={mobile ? 'name black' : 'name '}>
@@ -120,7 +126,7 @@ class User extends Component {
               <Image className="avatar" src={avatar_img} />
             </View>
           </View>
-          <View className="list">
+          {/* <View className="list">
             {list &&
               list.map((item, index) => (
                 <View
@@ -134,7 +140,7 @@ class User extends Component {
                   {item.num > 0 && <Icon className="num">{item.num}</Icon>}
                 </View>
               ))}
-          </View>
+          </View> */}
         </View>
         <View className="login">
           <View className="card">
@@ -170,7 +176,7 @@ class User extends Component {
               <View className="iconfont icon-more arrow" />
             </View>
           </View>
-          <View
+          {/* <View
             className="item"
             data-url="/pages/couponList/index"
             onClick={this.goToPage}
@@ -181,6 +187,19 @@ class User extends Component {
             </View>
             <View className="right">
               {coupon_number && <View className="num">{coupon_number}</View>}
+              <View className="iconfont icon-more arrow" />
+            </View>
+          </View> */}
+          <View
+            className="item"
+            data-url="/pages/score/index"
+            onClick={this.goPage}
+          >
+            <View className="left">
+              <Image className="icon-left" src={coupon_img} />
+              <Text>积分</Text>
+            </View>
+            <View className="right">
               <View className="iconfont icon-more arrow" />
             </View>
           </View>

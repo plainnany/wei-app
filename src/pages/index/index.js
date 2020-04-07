@@ -65,26 +65,13 @@ export default class Index extends Component {
               </Navigator>
             </View>
             <View className='list'>
-              <View>
-                <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={v.image_url} />
-                </Navigator>
-              </View>
-              <View>
-                <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={v.image_url} />
-                </Navigator>
-              </View>
-              <View>
-                <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={v.image_url} />
-                </Navigator>
-              </View>
-              <View>
-                <Navigator openType='navigate' url='/pages/productDetail/index'>
-                  <Image src={v.image_url} />
-                </Navigator>
-              </View>
+              {v.imageList.map(item => (
+                <View key={item}>
+                  <Navigator openType='navigate' url='/pages/productDetail/index'>
+                    <Image src={item} />
+                  </Navigator>
+                </View>
+              ))}
             </View>
           </View>
         ))}
