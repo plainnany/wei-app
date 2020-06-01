@@ -12,7 +12,8 @@ export default class About extends Component {
   render() {
     return (
       <View className="about-page">
-        <Image src="https://i.loli.net/2020/04/06/SDJRfo6AOvQZ3yh.jpg" />
+        {/* <Image src="https://i.loli.net/2020/04/06/SDJRfo6AOvQZ3yh.jpg" /> */}
+        关于哈哈
       </View>
     );
   }

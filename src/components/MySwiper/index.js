@@ -15,7 +15,7 @@ export default class MySwiper extends Component {
   }
 
   render() {
-    const { banner, home } = this.props
+    const { banner } = this.props
     return (
       <Swiper
         className={'swiper'}

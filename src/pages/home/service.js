@@ -5,9 +5,14 @@ class Api {
     return api.get({ url: '/banner', data })
   }
 
+  // getProduct = data => {
+  //   return api.get({ url: '/product', data })
+  // }
+
   getProduct = data => {
-    return api.get({ url: '/product', data })
+    return api.get({ url: '/wx-intfice/queryFile', data })
   }
+
 }
 
 export default new Api()

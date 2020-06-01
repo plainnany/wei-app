@@ -1,46 +1,46 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import './index.less'
+import Taro, { Component } from "@tarojs/taro";
+import { View, Text, Image } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
+import "./index.less";
 
-// @connect(({ addressList }) => ({
-//   ...addressList,
-// }))
+@connect(({ addressList }) => ({
+  ...addressList
+}))
 class Addresslist extends Component {
   config = {
-    navigationBarTitleText: '收货地址',
-  }
+    navigationBarTitleText: "收货地址"
+  };
 
   componentDidMount = () => {
     // this.props.dispatch({
     //   type: 'addressList/getAddressList',
     // })
-  }
+  };
 
   componentDidShow = () => {
     // this.props.dispatch({
     //   type: 'addressList/getAddressList',
     // })
-  }
+  };
 
   addressUpdate = () => {
     // this.props.dispatch({
-    //   type: 'addressUpdate/save',
+    //   type: "addressUpdate/save",
     //   payload: {
-    //     addressId: '',
+    //     addressId: "",
     //     showValue: {
-    //       region_code: '',
-    //       region_name: '',
+    //       region_code: "",
+    //       region_name: ""
     //     },
-    //     contact_name: '',
-    //     contact_mobile: '',
-    //     address_detail: '',
-    //   },
-    // })
-    // Taro.navigateTo({
-    //   url: '/pages/addressUpdate/index',
-    // })
-  }
+    //     contact_name: "",
+    //     contact_mobile: "",
+    //     address_detail: ""
+    //   }
+    // });
+    Taro.navigateTo({
+      url: "/pages/addressUpdate/index"
+    });
+  };
 
   addressEdit = e => {
     const {
@@ -49,28 +49,28 @@ class Addresslist extends Component {
       region_name,
       contact_name,
       contact_mobile,
-      address_detail,
-    } = e.currentTarget.dataset
+      address_detail
+    } = e.currentTarget.dataset;
     this.props.dispatch({
-      type: 'addressUpdate/save',
+      type: "addressUpdate/save",
       payload: {
         addressId: id,
         showValue: {
           region_code,
-          region_name,
+          region_name
         },
         contact_name,
         contact_mobile,
-        address_detail,
-      },
-    })
+        address_detail
+      }
+    });
     Taro.navigateTo({
-      url: '/pages/addressUpdate/index',
-    })
-  }
+      url: "/pages/addressUpdate/index"
+    });
+  };
 
   render() {
-    const { addressList } = this.props
+    const { addressList } = this.props;
     return (
       <View className="addressList-page">
         {addressList.length > 0 ? (
@@ -104,20 +104,20 @@ class Addresslist extends Component {
             </View>
           ))
         ) : (
-            <View className="empty-address">
-              <Image
-                mode="widthFix"
-                src="https://static-rs.msparis.com/m-site/images/empty/address.png"
-              />
-            </View>
-          )}
+          <View className="empty-address">
+            <Image
+              mode="widthFix"
+              src="https://static-rs.msparis.com/m-site/images/empty/address.png"
+            />
+          </View>
+        )}
         <View className="add" onClick={this.addressUpdate}>
-          <Image mode="widthFix" src={require('../../images/icon/add.png')} />
+          <Image mode="widthFix" src={require("../../images/icon/add.png")} />
           <Text>添加地址</Text>
         </View>
       </View>
-    )
+    );
   }
 }
 
-export default Addresslist
+export default Addresslist;

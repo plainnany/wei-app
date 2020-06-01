@@ -1,19 +1,49 @@
-// @import '../../styles/mixin';
+@import '../../styles/mixin';
 
 .user-page {
-  // @include wh(100%, 100%);
-  padding: 0 45px;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
+  background-color: #fafafa;
   .taro-img,
   image {
     height: 100%;
   }
   .not-login {
+    padding: 0 45px;
+    background-color: #fff;
     .to-login {
       width: 100%;
       padding: 50px 0;
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
+      .right {
+        margin-left: 24px;
+        margin-top: 12px;
+        .msg {
+          height: 40px;
+        }
+
+        .check-in {
+          background-color: #ccc;
+          padding: 8px 12px;
+          font-size: 20px;
+          border-radius: 6px;
+          margin-top: 8px;
+          text-align: center;
+        }
+
+        button {
+          background-color: none;
+          font-weight: normal;
+          font-size: 26px;
+          color: inherit;
+          &::after{
+            content: '';
+            border: none;
+          }
+        }
+      }
       .left {
         display: flex;
         min-height: 200px;
@@ -39,12 +69,12 @@
       }
       .avatar-container {
         border-radius: 50%;
-        width: 200px;
-        height: 200px;
+        width: 120px;
+        height: 120px;
         overflow: hidden;
         .avatar {
-          width: 200px;
-          height: 200px;
+          width: 120px;
+          height: 120px;
           object-fit: contain;
         }
       }
@@ -99,6 +129,10 @@
     }
   }
   .login {
+    margin: 24px 0;
+    padding: 0 45px;
+    background-color: #fff;
+
     .card {
       width: 660px;
       padding: 40px 0;
@@ -166,6 +200,9 @@
       align-items: center;
       height: 100px;
       border-bottom: 2px solid #eeeeee;
+      &:last-child {
+        border-bottom: none;
+      }
       .taro-img,
       image {
         width: 40px;

@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { baseUrl, noConsole } from '../config'
+import { BASE_URL, noConsole } from '../config'
 
 const request_data = {
   platform: 'wap',
@@ -15,7 +15,7 @@ export default (options = { method: 'GET', data: {} }) => {
     )
   }
   return Taro.request({
-    url: baseUrl + options.url,
+    url: BASE_URL + options.url,
     data: {
       ...request_data,
       ...options.data,

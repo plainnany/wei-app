@@ -1,6 +1,12 @@
+import Taro from '@tarojs/taro';
+
 export default {
   namespace: 'user',
   state: {
+    is_checked_in: false,
+    avatarUrl: '',
+    gender: 2,
+    nickName: '',
     list: [
       {
         txt: '待支付',
@@ -43,6 +49,18 @@ export default {
         type: 0,
       },
     ],
+  },
+
+  effects: {
+    *checkin(_, { call, put }) {
+      yield put({
+        type: 'save',
+        payload: {
+          is_checked_in: true
+        }
+      });
+      Taro.showToast({ title: '签到成功, 积分+5', icon: "none" });
+    },
   },
 
   reducers: {

@@ -1,6 +1,7 @@
 export const IS_DEV = process.env.NODE_ENV === 'development'
 
-export const BASE_URL = IS_DEV ? 'http://127.0.0.1:3000' : 'https://www.jungaweb.club'
+// export const BASE_URL = IS_DEV ? 'http://127.0.0.1:3000' : 'https://www.jungaweb.club'
+export const BASE_URL = IS_DEV ? 'http://118.31.17.218:8081/demo' : 'https://www.jungaweb.club'
 
 export const HTTP_ERROR = {
   '400': '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
@@ -16,4 +17,5 @@ export const HTTP_ERROR = {
   '504': '网关超时。',
 }
 
+export const APP_ID = 'wx59a508fe793bbb3d'
 export const noConsole = false;

@@ -18,7 +18,8 @@ function createApp(opt) {
     global = {}
   }
 
-  if (!global.registered) opt.models.forEach(model => app.model(model))
+  // if (!global.registered) opt.models.forEach(model => app.model(model))
+  opt.models.forEach(model => app.model(model))
   global.registered = true
   app.start()
 

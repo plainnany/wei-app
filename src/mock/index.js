@@ -8,7 +8,12 @@ const IMAGE1 = 'https://i.loli.net/2020/04/06/odKkuvrnPtTUlDw.jpg'
 const IMAGE2 = 'https://i.loli.net/2020/04/06/rQIyBCMLRY8uPDa.jpg'
 const IMAGE3 = 'https://i.loli.net/2020/04/06/8fUl3rbHoJcILCM.jpg'
 const IMAGE4 = 'https://i.loli.net/2020/04/06/CulpvFsSIy5wtMj.jpg'
-const IMAGE_LIST = [IMAGE1, IMAGE2, IMAGE3, IMAGE4]
+
+import Image1 from '../images/icon/gift.png'
+import Image2 from '../images/icon/zhima.png'
+import Image3 from '../images/icon/mayi.png'
+
+const IMAGE_LIST = [Image1, Image1, Image1, Image1]
 
 const PRODUCT2 = 'https://i.loli.net/2020/04/06/svtHfP3Xq7NAmUy.jpg'
 const PRODUCT3 = 'https://i.loli.net/2020/04/06/kAS69qMnaXbPTxZ.jpg'
@@ -23,7 +28,7 @@ const products = [{ type: 'new', name: '新品' },
 { type: 'tv', name: '其他' }].map((v, i) => ({
   ...v,
   imageList: IMAGE_LIST,
-  image_url: IMAGE2,
+  image_url: Image1,
   alt: 'pic',
   title: v.name,
   id: i

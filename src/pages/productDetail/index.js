@@ -2,12 +2,15 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.less'
 import mockData from '../../mock'
+import { BASE_URL } from '../../config'
 
 export default class Index extends Component {
 
   componentWillMount() { }
 
-  componentDidMount() { }
+  componentDidMount() {
+    console.log(this.$router.params)
+  }
 
   componentWillUnmount() { }
 
@@ -24,7 +27,7 @@ export default class Index extends Component {
 
     return (
       <View className='product-detail-page'>
-        <Image src={productImage} />
+        <Image src={`${productImage}`} />
       </View>
     )
   }
