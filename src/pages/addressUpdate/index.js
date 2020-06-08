@@ -86,33 +86,25 @@ class Addressupdate extends Component {
   // 保存提交
   submit = () => {
     const {
-      showValue,
-      contact_name,
-      contact_mobile,
-      address_detail
+      consignee_name,
+      consignee_phone,
+      consignee_address
     } = this.props;
-    if (contact_name === "") {
+    if (consignee_name === "") {
       Taro.showToast({
         title: "请输入收货人",
         icon: "none"
       });
       return;
     }
-    if (!/^1[234578]\d{9}$/.test(contact_mobile)) {
+    if (!/^1[234578]\d{9}$/.test(consignee_phone)) {
       Taro.showToast({
         title: "手机号格式不正确",
         icon: "none"
       });
       return;
     }
-    if (showValue.region_name === "") {
-      Taro.showToast({
-        title: "请选择收货地址",
-        icon: "none"
-      });
-      return;
-    }
-    if (address_detail === "") {
+    if (consignee_address === "") {
       Taro.showToast({
         title: "请输入详细地址",
         icon: "none"
@@ -122,10 +114,9 @@ class Addressupdate extends Component {
     this.props.dispatch({
       type: "addressUpdate/submit",
       payload: {
-        showValue,
-        contact_name,
-        contact_mobile,
-        address_detail
+        consignee_name,
+        consignee_phone,
+        consignee_address
       }
     });
   };
@@ -146,13 +137,9 @@ class Addressupdate extends Component {
   render() {
     const {
       addressId,
-      districts,
-      pickerValue,
-      showValue,
-      contact_name,
-      contact_mobile,
-      address_detail,
-      address_main
+      consignee_name,
+      consignee_phone,
+      consignee_address
     } = this.props;
     return (
       <View className="addressUpdate-page">
@@ -162,49 +149,22 @@ class Addressupdate extends Component {
         <View className="form">
           <Input
             placeholder="收件人"
-            id="contact_name"
-            value={contact_name}
+            id="consignee_name"
+            value={consignee_name}
             onInput={this.update}
           />
           <Input
             type="number"
             maxLength="11"
             placeholder="手机号码"
-            id="contact_mobile"
-            value={contact_mobile}
+            id="consignee_phone"
+            value={consignee_phone}
             onInput={this.update}
           />
-          <Input
-            placeholder="省、市、区"
-            id="region_name"
-            value={showValue.region_name}
-            onInput={this.update}
-          />
-          {/* <Picker
-            className="picker"
-            mode="multiSelector"
-            rangeKey="name"
-            range={districts}
-            onColumnchange={this.onColumnchange}
-            onChange={this.onChange}
-            value={pickerValue}
-          >
-            {showValue.region_name == "" ? (
-              <View className="label">
-                省、市、区
-                <View className="iconfont icon-more arrow" />
-              </View>
-            ) : (
-              <View className="picker-item">
-                {showValue.region_name}
-                <View className="iconfont icon-more arrow" />
-              </View>
-            )}
-          </Picker> */}
           <Input
             placeholder="详细地址"
-            id="address_detail"
-            value={address_detail}
+            id="consignee_address"
+            value={consignee_address}
             onInput={this.update}
           />
         </View>

@@ -9,9 +9,8 @@ export default {
   effects: {
     *load({ payload }, { call, put }) {
       const { data } = yield call(service.getMenu);
-      const menu_list = data.filter(v => v.child);
-      yield put({ type: "save", payload: { menu_list } });
-      return menu_list;
+      yield put({ type: "save", payload: { menu_list: data } });
+      return data;
     },
     *getProduct({ payload }, { call, put }) {
       const { data } = yield call(service.getProduct, payload);

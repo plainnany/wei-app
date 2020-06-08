@@ -1,20 +1,13 @@
 import Taro from "@tarojs/taro";
-import * as addressUpdateApi from "./service";
+import addressUpdateApi from "./service";
 
 export default {
   namespace: "addressUpdate",
   state: {
     addressId: "",
-    cities: [],
-    districts: [],
-    pickerValue: [0, 0, 0],
-    showValue: {
-      region_code: "",
-      region_name: ""
-    },
-    contact_name: "",
-    contact_mobile: "",
-    address_detail: ""
+    consignee_name: '',
+    consignee_phone: '',
+    consignee_address: ''
   },
 
   effects: {
@@ -53,26 +46,31 @@ export default {
         });
       }
     },
-    *submit({ payload }, { select, call }) {
-      const { access_token } = yield select(state => state.common);
-      const { addressId } = yield select(state => state.addressUpdate);
-      const { status } = yield call(addressUpdateApi.updateAddress, {
-        id: addressId && addressId != "" ? addressId : undefined,
-        access_token,
-        region_code: payload.showValue.region_code,
-        region_name: payload.showValue.region_name,
-        contact_name: payload.contact_name,
-        contact_mobile: payload.contact_mobile,
-        address_detail: payload.address_detail
+    *submit({ payload }, { call, put, select }) {
+      const { open_id } = yield select(state => state.user);
+      const { data } = yield call(addressUpdateApi.updateAddress, {
+        open_id,
+        ...payload
       });
-      if (status === "ok") {
+      if (data === 0) {
         Taro.showToast({
-          title: "保存成功",
-          icon: "none"
+          title: '保存成功',
+          icon: 'none'
         });
+        yield put({
+          type: 'user/save',
+          payload: {
+            addressList: [{ ...payload }],
+          }
+        })
         setTimeout(() => {
           Taro.navigateBack();
         }, 1000);
+      } else {
+        Taro.showToast({
+          title: '保存失败',
+          icon: 'none'
+        })
       }
     },
     *removeAddress(_, { call, select }) {

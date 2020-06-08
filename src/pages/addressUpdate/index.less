@@ -1,4 +1,4 @@
-@bg-color-panel: red;
+@import '../../styles/mixin.less';
 
 .addressUpdate-page {
   // @include wh(100%, 100%);
@@ -44,8 +44,8 @@
     .confirm {
       padding: 20px 0;
       text-align: center;
-      font-size: 35px;
-      color: @bg-color-panel;
+      font-size: 36px;
+      color: @color-primary;
       // @include fj(center);
       align-items: center;
       image,
@@ -53,7 +53,7 @@
         width: 30px;
         height: 30px;
         display: inline-block;
-        margin-right: 6px;
+        margin-right: 12px;
       }
     }
     .remove {

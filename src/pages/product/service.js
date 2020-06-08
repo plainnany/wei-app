@@ -1,13 +1,13 @@
-import api from "../../services/api";
+import api from "../../services/api"
 
 class Api {
   getMenu = data => {
-    return api.get({ url: "/wx-intfice/queryMenu", data });
+    return api.get({ url: "/queryMenu", data })
   };
 
   getProduct = data => {
-    return api.get({ url: "/wx-intfice/queryFile", data });
+    return api.get({ url: "/queryFile", data })
   };
 }
 
-export default new Api();
+export default new Api()

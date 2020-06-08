@@ -9,7 +9,6 @@ export default class Index extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    console.log(this.$router.params)
   }
 
   componentWillUnmount() { }

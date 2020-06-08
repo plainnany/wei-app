@@ -1,7 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Text, Image, Navigator } from "@tarojs/components";
 import PropTypes from "prop-types";
 import "./index.less";
+import { BASE_URL } from "../../config";
 
 class GoodsList extends Component {
   static propTypes = {
@@ -35,15 +36,14 @@ class GoodsList extends Component {
             </View>
             <View className="list">
               {v.imageList.map(item => (
-                <View key={item} className="list-item">
+                <View key={item.image_id} className="list-item">
                   <Navigator
                     openType="navigate"
-                    url={`/pages/productDetail/index?type=${item}`}
+                    url={`/pages/productDetail/index?type=`}
                   >
-                    <Image src={item} className="list-item-image" />
+                    <Image src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
                     <View>
-                      <Text>jshdhf产品描述</Text>
-                      <Text className="price">¥ 1200</Text>
+                      {/* <Text>{item.describe_msg}</Text> */}
                     </View>
                   </Navigator>
                 </View>
@@ -73,8 +73,8 @@ class GoodsList extends Component {
         ) : list.length > 0 ? (
           this.renderList(list)
         ) : (
-          <View>暂无数据</View>
-        )}
+              <View>暂无数据</View>
+            )}
       </View>
     );
   }

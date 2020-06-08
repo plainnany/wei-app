@@ -1,57 +1,141 @@
 import Taro from '@tarojs/taro';
+import service from './service'
+import { APP_ID, APP_SECRET } from '../../config'
 
+const USER_INFO = typeof Taro.getStorageSync('userInfo') === 'object' ? Taro.getStorageSync('userInfo') : {}
 export default {
   namespace: 'user',
   state: {
-    is_checked_in: false,
-    avatarUrl: '',
-    gender: 2,
+    is_checked_in: null, // 是否签到
     nickName: '',
-    list: [
-      {
-        txt: '待支付',
-        img:
-          'http://static-r.msparis.com/uploads/d/e/de473a00fca2dae58c16decbd538347a.png',
-        num: 0,
-        link: '/userOrder.html?type=1',
-        type: 2,
-      },
-      {
-        txt: '待发货',
-        img:
-          'http://static-r.msparis.com/uploads/1/a/1acfd9f403b338721bec4a0acd2af7c8.png',
-        num: 0,
-        link: '/userOrder.html?type=5',
-        type: 3,
-      },
-      {
-        txt: '已发货',
-        img:
-          'http://static-r.msparis.com/uploads/7/b/7bd041417677878833efc599ffa43376.png',
-        num: 0,
-        link: '/userOrder.html?type=3',
-        type: 9, // 已发货的类型海伦正在加，后续会补上
-      },
-      {
-        txt: '待归还',
-        img:
-          'http://static-r.msparis.com/uploads/e/9/e94bc2b990c1f87611529dba0a194c6e.png',
-        num: 0,
-        link: '/userOrder.html?type=6',
-        type: 8,
-      },
-      {
-        txt: '全部订单',
-        img:
-          'http://static-r.msparis.com/uploads/b/b/bb575a6b318b47bae81b9acbba2f5fb8.png',
-        num: 0,
-        link: '/userOrder.html?type=0',
-        type: 0,
-      },
-    ],
+    avatarUrl: '',
+    gender: '',
+    province: '',
+    city: '',
+    nickName: '',
+    code: Taro.getStorageSync('code'),
+    open_id: Taro.getStorageSync('open_id'),
+    session_key: Taro.getStorageSync('session_key'),
+    ...USER_INFO,
+    addressList: [],
+    user_integral: '', // 用户积分
+    user_login_num: '' // 用户现有积分
+  },
+
+  subscriptions: {
+    setup({ dispatch }) {
+      Taro.checkSession({
+        success: () => {
+          console.log('checksession success')
+          const session_key = Taro.getStorageSync('session_key')
+          const code = Taro.getStorageSync('code')
+          const open_id = Taro.getStorageSync('open_id')
+          if (session_key && code && open_id) {
+            dispatch({
+              type: 'save',
+              payload: {
+                code,
+                open_id,
+                session_key,
+                ...USER_INFO
+              }
+            })
+          } else {
+            dispatch({ type: 'login' })
+          }
+        },
+        fail: () => {
+          console.log('checksession fail')
+          dispatch({ type: 'login' })
+        }
+      })
+
+    }
   },
 
   effects: {
+    *login(_, { call, put }) {
+      const data = yield call(service.wxLogin)
+      yield put({
+        type: 'save',
+        payload: {
+          code: data.code
+        }
+      })
+    },
+    *loginUser({ payload }, { call, put, select }) {
+      const { code } = yield select(state => state.user)
+      const response = yield call(service.loginUser, {
+        code,
+        userHead: payload.avatarUrl,
+        userName: payload.nickName,
+        userGender: payload.gender === '2' ? '女' : '男',
+        userCity: payload.city,
+        userProvince: payload.province
+      })
+      const signData = yield call(service.querySign, {
+        open_id: response.open_id,
+        forward_or_sign: 'Y'
+      })
+      yield put({
+        type: 'save',
+        payload: {
+          open_id: response.open_id,
+          session_key: response.session_key,
+          is_checked_in: signData.data === 'Y',
+          ...payload
+        }
+      })
+      Taro.setStorageSync('session_key', response.session_key)
+      Taro.setStorageSync('code', code)
+      Taro.setStorageSync('userInfo', { ...payload })
+      Taro.setStorageSync('open_id', response.open_id)
+      return response
+    },
+    *queryUser({ payload }, { call, put, select }) {
+      const { open_id } = yield select(state => state.user)
+      const { data } = yield call(service.queryUser, { open_id })
+      const user = data[0] || {}
+      if (user.consignee_address && user.consignee_name && user.consignee_phone) {
+        yield put({
+          type: 'save',
+          payload: {
+            addressList: [{
+              consignee_address: user.consignee_address,
+              consignee_name: user.consignee_name,
+              consignee_phone: user.consignee_phone,
+            }],
+            user_integral: user.user_integral,
+            user_login_num: user.user_login_num
+          }
+        })
+      }
+    },
+    *querySign(_, { call, put, select }) {
+      const { open_id } = yield select(state => state.user)
+      const { data } = yield call(service.querySign, {
+        open_id,
+        forward_or_sign: 'Y' // Y: 签到 N: 转发
+      })
+      yield put({
+        type: 'save',
+        payload: { is_checked_in: data === 'Y' }
+      })
+    },
+    *getUserInfo({ payload }, { call, put, select }) {
+      const { open_id } = yield select(state => state.user)
+      const response = yield call(service.getUserInfo, { open_id })
+      yield put({
+        type: 'save',
+        payload: {
+          // open_id: response.open_id,
+          // session_key: response.session_key
+        }
+      })
+      // Taro.setStorageSync('access_token', res.session_key)
+      // Taro.setStorageSync('open_id', res.open_id)
+      return response
+    },
     *checkin(_, { call, put }) {
       yield put({
         type: 'save',
@@ -59,8 +143,23 @@ export default {
           is_checked_in: true
         }
       });
-      Taro.showToast({ title: '签到成功, 积分+5', icon: "none" });
+      Taro.showToast({
+        title: `签到成功, 积分+5`,
+        icon: "none"
+      });
     },
+    *addScore(_, { call, put, select }) {
+      const { open_id } = yield select(state => state.user)
+      const { data } = yield call(service.addScore, {
+        open_id,
+        add_integral: 5,
+        forward_or_sign: 'Y' // Y: 签到， N: 转发
+      })
+      if (data.data === 0) {
+        yield put({ type: 'save', payload: { user_integral: data.user_integral } })
+      }
+      Taro.showToast({ title: data.msg, icon: "none" });
+    }
   },
 
   reducers: {

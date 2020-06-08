@@ -21,17 +21,17 @@ class Index extends Component {
     this.id = 1;
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     this.getProduct();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: "全部商品"
@@ -126,7 +126,7 @@ class Index extends Component {
                   onClick={this.onClick.bind(null, child)}
                   className={`sider-item-depth-2 ${
                     activeTab === child.menu_id ? "sider-item-active" : ""
-                  }`}
+                    }`}
                 >
                   {child.menu_name}
                 </View>
@@ -143,6 +143,7 @@ class Index extends Component {
                 onClick={this.goPageDetail.bind(null, v)}
               >
                 <Image src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
+
                 {/* <Image
                   src={`${BASE_URL}/static/image/7fdbecd8-6846-4cab-9e0b-b14411fa22ee.jpg`}
                   alt={v.image_name}

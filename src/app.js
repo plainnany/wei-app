@@ -4,6 +4,7 @@ import Index from "./pages/home/index";
 import models from "./models/index";
 import dva from "./utils/dva";
 import "./styles/base.less";
+import 'taro-ui/dist/style/index.scss'
 
 const dvaApp = dva.createApp({
   initialState: {},
@@ -18,13 +19,13 @@ const store = dvaApp.getStore();
 // }
 
 class App extends Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
-  componentDidCatchError() {}
+  componentDidCatchError() { }
 
   config = {
     pages: [
@@ -58,8 +59,8 @@ class App extends Component {
         {
           pagePath: "pages/brand/index",
           text: "品牌",
-          iconPath: "./images/tab/cart.png",
-          selectedIconPath: "./images/tab/cart-active.png"
+          iconPath: "./images/tab/brand.png",
+          selectedIconPath: "./images/tab/brand-active.png"
         },
         {
           pagePath: "pages/user/index",

@@ -7,13 +7,11 @@ import { BASE_URL, HTTP_ERROR } from "../config/index";
  * @returns {*}
  */
 function checkHttpStatus(response) {
-  // if (response.statusCode >= 200 && response.statusCode < 300) {
-  //   return response.data
-  // }
-  return response.data;
+  if (response.statusCode >= 200 && response.statusCode < 300) {
+    return response.data
+  }
 
-  const message =
-    HTTP_ERROR[response.statusCode] || `ERROR CODE: ${response.statusCode}`;
+  const message = HTTP_ERROR[response.statusCode] || `ERROR CODE: ${response.statusCode}`;
   const error = new Error(message);
   error.response = response;
   throw error;
@@ -29,13 +27,12 @@ function checkSuccess(data, resolve) {
     return data;
   }
 
-  // if (
-  //   typeof data.code === 'number' &&
-  //   data.code === 200
-  // ) {
-  //   return resolve(data)
-  // }
-  return resolve(data);
+  if (
+    typeof data.code === 'number' &&
+    data.code === 200
+  ) {
+    return resolve(data)
+  }
 
   const error = new Error(data.message || "服务端返回异常");
   error.data = data;
@@ -48,8 +45,8 @@ function checkSuccess(data, resolve) {
  * @param reject
  */
 function throwError(error, reject) {
-  if (error.errMsg) {
-    reject("服务器正在维护中!");
+  if (error.message) {
+    reject(error);
     throw new Error("服务器正在维护中!");
   }
   throw error;
@@ -63,7 +60,7 @@ export default {
       Taro.request({
         ...options,
         method: method || "GET",
-        url: `${BASE_URL}${url}`,
+        url: `${BASE_URL}/wx-intfice${url}`,
         header: {
           "content-type":
             method === "GET"
@@ -77,6 +74,7 @@ export default {
           checkSuccess(res, resolve);
         })
         .catch(error => {
+          console.log('catch error', error.response)
           throwError(error, reject);
         });
     });
@@ -93,5 +91,12 @@ export default {
       },
       "POST"
     );
+  },
+  promisefy(fn) {
+    return defaultProps => new Promise((resolve, reject) => fn({
+      ...defaultProps,
+      success: res => resolve(res),
+      fail: err => reject(err)
+    }))
   }
 };

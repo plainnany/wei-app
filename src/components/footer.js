@@ -7,7 +7,7 @@ export default class Index extends Component {
   render() {
     return (
       <View className='footer'>
-        Copyright © 2019-2020 Plainnany. All Rights Reserved.
+        {/* Copyright © 2019-2020 Plainnany. All Rights Reserved. */}
       </View>
     )
   }

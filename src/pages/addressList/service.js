@@ -1,8 +1,11 @@
-import Request from '../../utils/request';
+import Taro from '@tarojs/taro';
+import api from "../../services/api";
 
-export const getAddressList = data =>
-  Request({
-    url: '/user/address',
-    method: 'GET',
-    data,
-  });
+class Api {
+  updateConsignee = data => api.post({
+    url: "/updateConsignee",
+    data
+  })
+}
+
+export default new Api();

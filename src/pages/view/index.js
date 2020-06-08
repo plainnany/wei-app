@@ -7,7 +7,6 @@ export default class WebviewComponent extends Component {
     this.state = {};
   }
   componentDidMount() {
-    console.log(this.$router.params);
     const type = this.$router.params;
     setTimeout(() => {
       this.setState({

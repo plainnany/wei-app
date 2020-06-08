@@ -18,4 +18,5 @@ export const HTTP_ERROR = {
 }
 
 export const APP_ID = 'wx59a508fe793bbb3d'
+export const APP_SECRET = 'd4d4ce3f301b70d2208e1a65fe2c3e35'
 export const noConsole = false;

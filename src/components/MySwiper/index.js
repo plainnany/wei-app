@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { Swiper, SwiperItem, Image } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import './index.less'
+import { BASE_URL } from '../../config'
 
 export default class MySwiper extends Component {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class MySwiper extends Component {
       >
         {banner.map((item, index) => (
           <SwiperItem key={index}>
-            <Image src={item.image_url} />
+            <Image src={`${BASE_URL}${item.image_url}`} />
           </SwiperItem>
         ))}
       </Swiper>

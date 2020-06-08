@@ -18,19 +18,18 @@ class Index extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
-    console.log(this.$router.params);
     const menu_id = this.$router.params.id;
     this.getProduct(menu_id);
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: "系列"
@@ -64,21 +63,21 @@ class Index extends Component {
         ) : product_list.length === 0 ? (
           <View className="no_data">暂无数据</View>
         ) : (
-          <View className="list">
-            <View className="list_product">
-              {product_list.map(v => (
-                <View
-                  className="list_product_item"
-                  key={v.menu_id}
-                  onClick={this.goPageDetail.bind(null, v)}
-                >
-                  <Image src={`${BASE_URL}${v.image_url}`} alt={v.image_name} />
-                  <View className="text">{v.product_name}</View>
+              <View className="list">
+                <View className="list_product">
+                  {product_list.map(v => (
+                    <View
+                      className="list_product_item"
+                      key={v.menu_id}
+                      onClick={this.goPageDetail.bind(null, v)}
+                    >
+                      <Image src={`${BASE_URL}${v.image_url}`} alt={v.image_name} />
+                      <View className="text">{v.product_name}</View>
+                    </View>
+                  ))}
                 </View>
-              ))}
-            </View>
-          </View>
-        )}
+              </View>
+            )}
       </View>
     );
   }
