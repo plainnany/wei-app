@@ -37,9 +37,11 @@ class App extends Component {
       "pages/login/index",
       "pages/about/index",
       "pages/score/index",
+      "pages/order/index",
       "pages/addressList/index",
       "pages/addressUpdate/index",
       "pages/productDetail/index",
+      "pages/productItem/index",
       "pages/view/index"
     ],
     tabBar: {

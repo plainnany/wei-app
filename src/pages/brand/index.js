@@ -1,29 +1,31 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, WebView } from "@tarojs/components";
+import { View, Text, Video, Image } from "@tarojs/components";
 import "./index.less";
 import mockData from "../../mock/index";
 import Loading from "../../components/loading";
+import service from '../home/service'
+import { BASE_URL, PARAMS } from '../../config'
 
 export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: "products",
+      activeTab: "link",
       products: []
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() { }
 
   componentDidMount() {
     this.getProduct();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
-  componentDidShow() {}
+  componentDidShow() { }
 
-  componentDidHide() {}
+  componentDidHide() { }
 
   config = {
     navigationBarTitleText: "品牌"
@@ -35,30 +37,28 @@ export default class Index extends Component {
   };
 
   getProduct = type => {
-    this.setState({ loading: true });
-    const products = [];
-    for (let i = 0; i < 10; i++) {
-      products.push({
-        id: i,
-        title: `product ${i + 1}`,
-        url: "",
-        type: `type${i}`
-      });
-    }
-    setTimeout(() => {
-      this.setState({ products, loading: false });
-    }, 1000);
+    this.setState({ loading: true })
+    service.getMenu({
+      menu_id: PARAMS[type || 'link']
+    }).then(res => {
+      this.setState({
+        products: res.data,
+        loading: false
+      })
+    })
   };
 
-  goToPage = type => {
-    Taro.navigateTo({ url: `/pages/view/index?type=${type}` });
+  goToPage = v => {
+    if (this.state.activeTab === 'link') {
+      Taro.navigateTo({ url: `/pages/view/index?link=${v.describe_msg}` });
+    }
   };
 
   render() {
-    const { loading, products } = this.state;
+    const { loading, products, activeTab } = this.state;
     const tabs = [
       {
-        type: "products",
+        type: "link",
         title: "产品画册"
       },
       {
@@ -66,8 +66,8 @@ export default class Index extends Component {
         title: "视频"
       },
       {
-        type: "ser",
-        title: "工程系列"
+        type: "project",
+        title: "工程案例"
       }
     ];
     return (
@@ -75,9 +75,7 @@ export default class Index extends Component {
         <View className="tab">
           {tabs.map(v => (
             <Text
-              className={`tab-item ${
-                this.state.activeTab === v.type ? "tab-item-active" : ""
-              }`}
+              className={`tab_item ${activeTab === v.type ? 'tab_item_active' : ''}`}
               key={v.type}
               onClick={this.handleTab.bind(null, v.type)}
             >
@@ -88,19 +86,35 @@ export default class Index extends Component {
         {loading ? (
           <Loading />
         ) : (
-          <View className="content">
-            {this.state.products.map(v => (
-              <View className="list" key={v.id}>
-                <View
-                  className="list-item"
-                  onClick={() => this.goToPage(v.type)}
-                >
-                  图片链接
+            <View className="content">
+              {activeTab === 'video' ? (
+                <View className="video">
+                  {products.map(v => (
+                    <View
+                      className="video_item"
+                      key={v.image_id}
+                    >
+                      <Video src={`${BASE_URL}${v.image_url}`} />
+                      <View className="text">{v.product_name}</View>
+                    </View>
+                  ))}
                 </View>
-              </View>
-            ))}
-          </View>
-        )}
+              ) : (
+                  <View className="product">
+                    {products.map(v => (
+                      <View
+                        className="product_item"
+                        key={v.image_id}
+                        onClick={this.goToPage.bind(null, v)}
+                      >
+                        <Image src={`${BASE_URL}${v.image_url}`} alt={v.image_name} />
+                        <View className="text">{v.product_name}</View>
+                      </View>
+                    ))}
+                  </View>
+                )}
+            </View>
+          )}
       </View>
     );
   }

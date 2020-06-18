@@ -12,7 +12,6 @@ export default {
     gender: '',
     province: '',
     city: '',
-    nickName: '',
     code: Taro.getStorageSync('code'),
     open_id: Taro.getStorageSync('open_id'),
     session_key: Taro.getStorageSync('session_key'),
@@ -30,17 +29,7 @@ export default {
           const session_key = Taro.getStorageSync('session_key')
           const code = Taro.getStorageSync('code')
           const open_id = Taro.getStorageSync('open_id')
-          if (session_key && code && open_id) {
-            dispatch({
-              type: 'save',
-              payload: {
-                code,
-                open_id,
-                session_key,
-                ...USER_INFO
-              }
-            })
-          } else {
+          if (!session_key || !code || !open_id) {
             dispatch({ type: 'login' })
           }
         },
@@ -150,15 +139,15 @@ export default {
     },
     *addScore(_, { call, put, select }) {
       const { open_id } = yield select(state => state.user)
-      const { data } = yield call(service.addScore, {
+      const response = yield call(service.addScore, {
         open_id,
         add_integral: 5,
         forward_or_sign: 'Y' // Y: 签到， N: 转发
       })
-      if (data.data === 0) {
-        yield put({ type: 'save', payload: { user_integral: data.user_integral } })
+      if (response.data === 'ok') {
+        yield put({ type: 'save', payload: { user_integral: response.user_integral } })
       }
-      Taro.showToast({ title: data.msg, icon: "none" });
+      Taro.showToast({ title: response.msg, icon: "none" });
     }
   },
 

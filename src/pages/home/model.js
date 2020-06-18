@@ -1,4 +1,5 @@
 import homeApi from "./service";
+import { PARAMS } from '../../config/index'
 
 export default {
   namespace: "home",
@@ -12,11 +13,11 @@ export default {
   },
   effects: {
     *load(_, { call, put }) {
-      const { data } = yield call(homeApi.getBanner, { menu_id: 99 });
+      const { data } = yield call(homeApi.getBanner, { menu_id: PARAMS.banner });
       yield put({ type: 'save', payload: { banner: data } })
     },
     *product(_, { call, put }) {
-      const { data } = yield call(homeApi.getBanner, { menu_id: 88 })
+      const { data } = yield call(homeApi.getBanner, { menu_id: PARAMS.new })
       yield put({
         type: 'save',
         payload: {

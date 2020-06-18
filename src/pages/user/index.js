@@ -2,9 +2,10 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './index.less'
-import message_img from '../../images/user/message.png'
+import order_img from '../../images/user/order.png'
+import change_img from '../../images/user/change.png'
 import avatar_img from '../../images/user/avatar.png'
-import coupon_img from '../../images/user/coupon.png'
+import score_img from '../../images/user/score.png'
 import about_img from '../../images/user/about.png'
 import address_img from '../../images/user/address.png'
 
@@ -21,6 +22,9 @@ class User extends Component {
     if (this.props.open_id) {
       this.props.dispatch({
         type: 'user/querySign'
+      })
+      this.props.dispatch({
+        type: 'user/queryUser'
       })
     }
   }
@@ -47,13 +51,33 @@ class User extends Component {
   }
 
   checkin = () => {
+    if (this.props.is_checked_in) {
+      return
+    }
     this.props.dispatch({
       type: 'user/addScore'
     })
   }
 
+  onShareAppMessage(res) {
+    console.log(res)
+    return {
+      title: '自定义转发标题',
+      path: `自定义转发的路径`,
+      imageUrl: '自定义转发的图片',
+      success: function (res) {
+        console.log(res);
+        console.log("转发成功:" + JSON.stringify(res));
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log("转发失败:" + JSON.stringify(res));
+      }
+    }
+  }
+
   render() {
-    let { nickName, avatarUrl, score, session_key } = this.props
+    let { nickName, avatarUrl, user_integral } = this.props
     const isLogin = Taro.getStorageSync('session_key')
     return (
       <View className="user-page">
@@ -90,17 +114,18 @@ class User extends Component {
             onClick={this.goToPage}
           >
             <View className="left">
-              <Image className="icon-left" src={address_img} />
-              <Text>会员信息</Text>
+              <Image className="icon-left" src={score_img} />
+              <Text>会员积分</Text>
+              <Text className="score">{user_integral}</Text>
             </View>
           </View>
           <View
             className="item"
-            data-url="/pages/addressList/index"
+            data-url="/pages/order/index"
             onClick={this.goToPage}
           >
             <View className="left">
-              <Image className="icon-left" src={address_img} />
+              <Image className="icon-left" src={order_img} />
               <Text>我的订单</Text>
             </View>
           </View>
@@ -110,7 +135,7 @@ class User extends Component {
             onClick={this.goToPage}
           >
             <View className="left">
-              <Image className="icon-left" src={address_img} />
+              <Image className="icon-left" src={change_img} />
               <Text>积分兑换</Text>
             </View>
           </View>

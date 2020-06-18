@@ -6,8 +6,13 @@ class Api {
   };
 
   getProduct = data => {
-    return api.get({ url: "/queryFile", data })
+    return api.get({ url: "/queryProdcut", data })
   };
+
+  getProductDetail = data => api.get({
+    url: '/queryProdcutDetail',
+    data
+  })
 }
 
 export default new Api()

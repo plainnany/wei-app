@@ -1,4 +1,4 @@
-import Taro, { Component } from "@tarojs/taro";
+import Taro, { Component, connectSocket } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { AtModal } from 'taro-ui'
 import { connect } from "@tarojs/redux";
@@ -15,10 +15,11 @@ class ScorePage extends Component {
     super(props)
     this.state = {
       visible: false,
-      data: {},
+      present: {},
       coin_num: 0
     };
   }
+
   config = {
     navigationBarTitleText: "积分兑换"
   };
@@ -37,11 +38,12 @@ class ScorePage extends Component {
     if (this.checkAddress()) {
       if (this.props.user_integral < v.present_integral) {
         Taro.showToast({
-          title: '用户积分不足，无法兑换'
+          title: '用户积分不足，无法兑换',
+          icon: 'none'
         })
         return
       }
-      this.setState({ visible: true, data: v });
+      this.setState({ visible: true, present: v });
     }
   };
 
@@ -61,7 +63,7 @@ class ScorePage extends Component {
   }
 
   confirmExchangeScore = () => {
-    const { present_id, present_integral } = this.state.data
+    const { present_id, present_integral } = this.state.present
     this.props.dispatch({
       type: 'score/coinPresent',
       payload: {
@@ -69,10 +71,31 @@ class ScorePage extends Component {
         present_integral
       }
     }).then(() => {
+      this.updateData(present_id, present_integral)
       this.setState({ visible: false })
     })
+
   };
 
+  updateData = (present_id, present_integral) => {
+    const product_list = [...this.props.product_list]
+    const index = product_list.findIndex(v => v.present_id === present_id)
+    const user_integral = this.props.user_integral - present_integral
+    product_list.splice(index, 1, {
+      ...this.state.present,
+      present_num: this.state.present.present_num - 1
+    })
+
+    this.props.dispatch({
+      type: 'score/save',
+      payload: { product_list }
+    })
+
+    this.props.dispatch({
+      type: 'user/save',
+      payload: { user_integral }
+    })
+  }
 
   render() {
     const { product_list, effects } = this.props;
@@ -80,7 +103,6 @@ class ScorePage extends Component {
     return (
       <View className="score-page">
         <View className="product">
-          {/* {loading ? 'loading' : <View>pro</View>} */}
           <View className="product-list">
             {product_list.map(v => (
               <View
@@ -91,8 +113,7 @@ class ScorePage extends Component {
                 <Image src={`${BASE_URL}${v.present_url}`} alt="图片" />
                 <View>
                   <View>{v.present_name}</View>
-                  {/* <View>{v.present_desc}</View> */}
-                  <Text className="price">{v.present_integral} 积分 |</Text>
+                  <Text className="price">{v.present_integral} 积分 | </Text>
                   <Text className="price">{v.present_num} 库存</Text>
                 </View>
               </View>
@@ -102,7 +123,7 @@ class ScorePage extends Component {
         <AtModal
           isOpened={this.state.visible}
           title="确认要兑换么？"
-          content={`将消耗${this.state.data.present_integral}积分`}
+          content={`将消耗${this.state.present.present_integral}积分`}
           onConfirm={this.confirmExchangeScore}
           onCancel={this.hideModal}
           confirmText="确认"

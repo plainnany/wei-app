@@ -28,7 +28,7 @@ export default {
         coin_num: 1,
         ...addressList[0]
       })
-      Taro.showToast({ title: '兑换成功' })
+      Taro.showToast({ title: data.msg, icon: 'none' })
       return data
     }
   },

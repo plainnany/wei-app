@@ -65,19 +65,24 @@ class Index extends Component {
           </View>
           <View
             className="tabs-item"
-            className={`tabs-item tabs-item-info`}
           >
-            <Navigator url="/pages/product/index" openType="switchTab">
+            <Navigator
+              url="/pages/productItem/index?id=2"
+              openType="navigate"
+              hoverClass="none"
+            >
               <Text className="iconfont">&#xe602;</Text>
               <View>粉末涂料</View>
             </Navigator>
           </View>
           <View
             className="tabs-item"
-            data-url="/pages/product/index"
-            onClick={this.goToPage}
           >
-            <Navigator url="/pages/product/index" openType="switchTab">
+            <Navigator
+              url="/pages/productItem/index?id=14"
+              openType="navigate"
+              hoverClass="none"
+            >
               <Text className="iconfont">&#xe606;</Text>
               <View>水性涂料</View>
             </Navigator>

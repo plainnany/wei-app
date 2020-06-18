@@ -20,3 +20,10 @@ export const HTTP_ERROR = {
 export const APP_ID = 'wx59a508fe793bbb3d'
 export const APP_SECRET = 'd4d4ce3f301b70d2208e1a65fe2c3e35'
 export const noConsole = false;
+export const PARAMS = {
+  banner: 99, // 轮播图
+  new: 88, // 新品
+  project: 77, // 工程案例
+  video: 66, // 视频
+  link: 55 // 产品画册
+}

@@ -52,7 +52,7 @@ export default {
         open_id,
         ...payload
       });
-      if (data === 0) {
+      if (data === 'ok') {
         Taro.showToast({
           title: '保存成功',
           icon: 'none'

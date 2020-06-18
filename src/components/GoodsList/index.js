@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image, Navigator } from "@tarojs/components";
 import PropTypes from "prop-types";
 import "./index.less";
-import { BASE_URL } from "../../config";
+import { BASE_URL, PARAMS } from "../../config";
 
 class GoodsList extends Component {
   static propTypes = {
@@ -30,6 +30,7 @@ class GoodsList extends Component {
                 className="more"
                 openType="switchTab"
                 url={`/pages/product/index?type=${v.type}`}
+                hoverClass="none"
               >
                 更多
               </Navigator>
@@ -39,7 +40,8 @@ class GoodsList extends Component {
                 <View key={item.image_id} className="list-item">
                   <Navigator
                     openType="navigate"
-                    url={`/pages/productDetail/index?type=`}
+                    url={`/pages/productDetail/index?id=${PARAMS.new}&title=${item.product_name}`}
+                    hoverClass="none"
                   >
                     <Image src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
                     <View>
