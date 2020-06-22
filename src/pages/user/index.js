@@ -158,6 +158,15 @@ class User extends Component {
               <Text>关于</Text>
             </View>
           </View>
+          {/* <View
+            className="item"
+            onClick={() => Taro.navigateTo({ url: '/pages/about/index' })}
+          >
+            <View className="left">
+              <Image className="icon-left" src={about_img} />
+              <Button openType="getPhoneNumber" onGetPhoneNumber={}>获取手机号</Button>
+            </View>
+          </View> */}
         </View>
       </View>
     )

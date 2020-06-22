@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import './index.less'
-import mockData from '../../mock'
 import { BASE_URL } from '../../config'
 import service from '../product/service'
 

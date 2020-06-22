@@ -74,7 +74,6 @@ export default {
           checkSuccess(res, resolve);
         })
         .catch(error => {
-          console.log('catch error', error.response)
           throwError(error, reject);
         });
     });

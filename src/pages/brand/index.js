@@ -1,7 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Video, Image } from "@tarojs/components";
 import "./index.less";
-import mockData from "../../mock/index";
 import Loading from "../../components/loading";
 import service from '../home/service'
 import { BASE_URL, PARAMS } from '../../config'

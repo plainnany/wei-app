@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import service from './service'
-import { APP_ID, APP_SECRET } from '../../config'
 
 const USER_INFO = typeof Taro.getStorageSync('userInfo') === 'object' ? Taro.getStorageSync('userInfo') : {}
 export default {
@@ -58,7 +57,7 @@ export default {
         code,
         userHead: payload.avatarUrl,
         userName: payload.nickName,
-        userGender: payload.gender === '2' ? '女' : '男',
+        userGender: payload.gender === 2 ? '女' : '男',
         userCity: payload.city,
         userProvince: payload.province
       })

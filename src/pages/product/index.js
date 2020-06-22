@@ -2,7 +2,6 @@ import Taro, { Component, connectSocket } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 import { View, Text } from "@tarojs/components";
 import "./index.less";
-import mockData from "../../mock/index";
 import Loading from "../../components/loading";
 import { BASE_URL } from "../../config/index";
 
@@ -56,23 +55,6 @@ class Index extends Component {
           third_menu_list
         });
       });
-  };
-
-  getMockData = length => {
-    const data = [];
-    for (let i = 0; i < length; i++) {
-      data.push({
-        id: i,
-        children: [
-          {
-            id: i * 10 + 1,
-            name: `子产品${i + 1}`
-          }
-        ],
-        name: `产品${i + 1}`
-      });
-    }
-    return data;
   };
 
   onClick = menu => {

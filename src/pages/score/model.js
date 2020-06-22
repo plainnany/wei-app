@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import service from './service';
-import mockData from '../../mock/index'
 
 export default {
   namespace: 'score',

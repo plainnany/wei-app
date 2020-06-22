@@ -6,7 +6,6 @@ import Taro, { Component } from "@tarojs/taro"
 import { View, Text, Video, Image } from "@tarojs/components"
 import { connect } from "@tarojs/redux"
 import "./index.less"
-import mockData from "../../mock/index"
 import Loading from "../../components/loading"
 import service from './service'
 import { BASE_URL, PARAMS } from '../../config'

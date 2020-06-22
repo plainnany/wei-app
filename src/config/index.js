@@ -17,8 +17,7 @@ export const HTTP_ERROR = {
   '504': '网关超时。',
 }
 
-export const APP_ID = 'wx59a508fe793bbb3d'
-export const APP_SECRET = 'd4d4ce3f301b70d2208e1a65fe2c3e35'
+export const APP_ID = 'wx9bdf5249ced28263'
 export const noConsole = false;
 export const PARAMS = {
   banner: 99, // 轮播图

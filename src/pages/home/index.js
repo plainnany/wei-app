@@ -5,7 +5,6 @@ import MySwiper from "../../components/MySwiper";
 import GoodsList from "../../components/GoodsList";
 import "./index.less";
 import Footer from "../../components/footer";
-import mockData from "../../mock/index";
 import "../../styles/iconfont2.less";
 
 @connect(({ home, loading }) => ({
@@ -16,8 +15,6 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      banner: mockData.banners,
-      products: mockData.products
     };
   }
 

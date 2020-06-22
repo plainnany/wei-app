@@ -8,13 +8,16 @@
   padding: 0 24px;
   background-color: #fafafa;
   font-size: 28px;
+  overflow: auto;
 }
 
 .tab {
-  width: 100%;
+  position: fixed;
+  width: calc(100% - 48px);
   display: flex;
   overflow: auto;
   font-size: 32px;
+  z-index: 1;
 
   &_item {
     text-align: center;
@@ -35,6 +38,8 @@
   margin: 24rpx 0;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+  margin-top: 100px;
 }
 
 .product {
