@@ -1,4 +1,4 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component, connectSocket } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './index.less'
@@ -51,11 +51,30 @@ class User extends Component {
   }
 
   checkin = () => {
-    if (this.props.is_checked_in) {
-      return
-    }
     this.props.dispatch({
       type: 'user/addScore'
+    })
+  }
+
+  onGetPhoneNumber = (e) => {
+    if (e.detail.errMsg === 'getPhoneNumber:ok') {
+      this.savePhoneNumber(e.detail)
+    }
+  }
+
+  savePhoneNumber = (params) => {
+    console.log(params)
+    const data = {
+      open_id: this.props.open_id,
+      user_phone: '14212345678'
+    }
+    this.props.dispatch({
+      type: 'user/savePhoneNumber',
+      payload: data
+    }).then(res => {
+      if (res.data === 'ok') {
+        this.checkin()
+      }
     })
   }
 
@@ -100,8 +119,12 @@ class User extends Component {
               </View>
               {
                 isLogin &&
-                <View className="check-in" onClick={this.checkin}>
-                  {this.props.is_checked_in ? '已签到' : '每日签到'}
+                <View>
+                  {this.props.is_checked_in ? <View className="check-in">已签到</View> : (
+                    <Button className="phone" openType="getPhoneNumber" onGetPhoneNumber={this.onGetPhoneNumber}>
+                      每日签到
+                    </Button>
+                  )}
                 </View>
               }
             </View>
@@ -149,7 +172,7 @@ class User extends Component {
               <Text>收货地址</Text>
             </View>
           </View>
-          <View
+          {/* <View
             className="item"
             onClick={() => Taro.navigateTo({ url: '/pages/about/index' })}
           >
@@ -157,7 +180,7 @@ class User extends Component {
               <Image className="icon-left" src={about_img} />
               <Text>关于</Text>
             </View>
-          </View>
+          </View> */}
           {/* <View
             className="item"
             onClick={() => Taro.navigateTo({ url: '/pages/about/index' })}

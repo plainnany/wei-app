@@ -6,6 +6,7 @@ import GoodsList from "../../components/GoodsList";
 import "./index.less";
 import Footer from "../../components/footer";
 import "../../styles/iconfont2.less";
+import { PARAMS } from '../../config'
 
 @connect(({ home, loading }) => ({
   ...home,
@@ -54,7 +55,8 @@ class Index extends Component {
         <View className="tabs">
           <View
             className={`tabs-item tabs-item-info`}
-            data-url="/pages/productDetail/index"
+            data-url={`/pages/productDetail/index?id=${PARAMS.info}`}
+
             onClick={this.goToPage}
           >
             <Text className="iconfont">&#xe709;</Text>

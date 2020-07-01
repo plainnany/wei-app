@@ -1,8 +1,6 @@
 export const IS_DEV = process.env.NODE_ENV === 'development'
 
-// export const BASE_URL = IS_DEV ? 'http://127.0.0.1:3000' : 'https://www.jungaweb.club'
-export const BASE_URL = IS_DEV ? 'http://118.31.17.218:8081/demo' : 'https://www.jungaweb.club'
-
+export const BASE_URL = 'https://www.riverscolor.com/demo'
 export const HTTP_ERROR = {
   '400': '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
   '401': '用户没有权限（令牌、用户名、密码错误）。',
@@ -22,7 +20,8 @@ export const noConsole = false;
 export const PARAMS = {
   banner: 99, // 轮播图
   new: 88, // 新品
-  project: 77, // 工程案例
+  project: 77, // 工程案例/*  */
   video: 66, // 视频
+  info: 44, // 公司简介
   link: 55 // 产品画册
 }

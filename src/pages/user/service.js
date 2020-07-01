@@ -29,6 +29,11 @@ class Api {
     data
   })
 
+  savePhoneNumber = data => api.post({
+    url: '/addUserPhone',
+    data
+  })
+
 }
 
 export default new Api();

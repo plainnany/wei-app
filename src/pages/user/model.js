@@ -17,7 +17,8 @@ export default {
     ...USER_INFO,
     addressList: [],
     user_integral: '', // 用户积分
-    user_login_num: '' // 用户现有积分
+    user_login_num: '', // 用户现有积分
+    user_phone: ''
   },
 
   subscriptions: {
@@ -144,9 +145,19 @@ export default {
         forward_or_sign: 'Y' // Y: 签到， N: 转发
       })
       if (response.data === 'ok') {
-        yield put({ type: 'save', payload: { user_integral: response.user_integral } })
+        yield put({
+          type: 'save',
+          payload: {
+            user_integral: response.user_integral,
+            is_checked_in: response.sign_status === 'Y'
+          }
+        })
       }
       Taro.showToast({ title: response.msg, icon: "none" });
+    },
+    *savePhoneNumber({ payload }, { call, put, select }) {
+      const response = yield call(service.savePhoneNumber, payload)
+      return yield response
     }
   },
 
