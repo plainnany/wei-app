@@ -38,11 +38,13 @@ class App extends Component {
       "pages/about/index",
       "pages/score/index",
       "pages/order/index",
+      "pages/desc/index",
+      "pages/program/index",
       "pages/addressList/index",
       "pages/addressUpdate/index",
       "pages/productDetail/index",
       "pages/productItem/index",
-      "pages/view/index"
+      "pages/link/index"
     ],
     tabBar: {
       list: [

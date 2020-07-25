@@ -15,8 +15,32 @@ export default class MySwiper extends Component {
     // home: false,
   }
 
+  static windowWidth = 0
+
+  state = {
+    heights: []
+  }
+
+  componentDidMount() {
+    wx.getSystemInfo({
+      success: (res) => {
+        this.windowWidth = res.windowWidth
+      }
+    })
+  }
+
+  onLoad = (e) => {
+    const heights = this.state.heights
+    const ratio = e.detail.width / e.detail.height
+    // 按照宽高比计算图片宽度 100% 时的高度
+    const imgHeight = this.windowWidth / ratio
+    heights.push(imgHeight)
+    this.setState({ heights })
+  }
+
   render() {
     const { banner } = this.props
+    const maxHeight = Math.max.apply(null, this.state.heights)
     return (
       <Swiper
         className={'swiper'}
@@ -25,10 +49,11 @@ export default class MySwiper extends Component {
         indicatorColor="#999"
         indicatorActiveColor="#bf708f"
         autoplay
+        style={{ height: `${maxHeight}px` }}
       >
         {banner.map((item, index) => (
           <SwiperItem key={index}>
-            <Image src={`${BASE_URL}${item.image_url}`} />
+            <Image mode="widthFix" src={`${BASE_URL}${item.image_url}`} onLoad={this.onLoad} />
           </SwiperItem>
         ))}
       </Swiper>

@@ -23,5 +23,6 @@ export const PARAMS = {
   project: 77, // 工程案例/*  */
   video: 66, // 视频
   info: 44, // 公司简介
-  link: 55 // 产品画册
+  link: 55, // 产品画册
+  icon: 33 // 首页图标
 }

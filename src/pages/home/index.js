@@ -5,8 +5,7 @@ import MySwiper from "../../components/MySwiper";
 import GoodsList from "../../components/GoodsList";
 import "./index.less";
 import Footer from "../../components/footer";
-import "../../styles/iconfont2.less";
-import { PARAMS } from '../../config'
+import { PARAMS, BASE_URL } from '../../config'
 
 @connect(({ home, loading }) => ({
   ...home,
@@ -27,6 +26,10 @@ class Index extends Component {
     })
     this.props.dispatch({
       type: "home/product"
+    })
+
+    this.props.dispatch({
+      type: "home/icons"
     });
   }
 
@@ -40,23 +43,41 @@ class Index extends Component {
     navigationBarTitleText: "首页"
   };
 
-  goToPage = e => {
-    Taro.navigateTo({
-      url: e.currentTarget.dataset.url
-    });
+  goToPage = icon => {
+    if (icon.product_name === '公司简介') {
+      Taro.navigateTo({ url: `/pages/desc/index?id=${PARAMS.info}` });
+    } else if (icon.product_name === '粉末涂料') {
+      Taro.navigateTo({ url: `/pages/productItem/index?id=2` });
+    } else if (icon.product_name === '水性涂料') {
+      Taro.navigateTo({ url: `/pages/productItem/index?id=14` });
+    } else if (icon.product_name === '解决方案') {
+      Taro.switchTab({ url: '/pages/brand/index' })
+    }
   };
 
   render() {
-    const { products, banner, effects } = this.props;
-
+    const { products, banner, effects, icons } = this.props;
     return (
       <View className="home">
         <MySwiper banner={banner} />
         <View className="tabs">
-          <View
+          {icons.map(icon => (
+            <View
+              key={icon.image_id}
+              className={`tabs-item tabs-item-info`}
+              onClick={this.goToPage.bind(null, icon)}
+            >
+              <View className="iconfont">
+                <Image src={`${BASE_URL}${icon.image_url}`} mode="widthFix" />
+              </View>
+              <View>
+                {icon.product_name}
+              </View>
+            </View>
+          ))}
+          {/* <View
             className={`tabs-item tabs-item-info`}
-            data-url={`/pages/productDetail/index?id=${PARAMS.info}`}
-
+            data-url={`/pages/desc/index?id=${PARAMS.info}`}
             onClick={this.goToPage}
           >
             <Text className="iconfont">&#xe709;</Text>
@@ -88,11 +109,11 @@ class Index extends Component {
           </View>
           <View
             className="tabs-item"
-            onClick={() => Taro.navigateTo({ url: '/pages/view/index?i=xxx' })}
+            onClick={() => Taro.switchTab({ url: '/pages/brand/index' })}
           >
             <Text className="iconfont">&#xe75d;</Text>
             <View>解决方案</View>
-          </View>
+          </View> */}
         </View>
         <GoodsList
           list={products}

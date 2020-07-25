@@ -35,6 +35,7 @@ class GoodsList extends Component {
                 更多
               </Navigator>
             </View>
+            <View className="banner"><Image mode="widthFix" src={`${BASE_URL}${v.banner}`} /></View>
             <View className="list">
               {v.imageList.map(item => (
                 <View key={item.image_id} className="list-item">
@@ -43,9 +44,9 @@ class GoodsList extends Component {
                     url={`/pages/productDetail/index?id=${PARAMS.new}&title=${item.product_name}`}
                     hoverClass="none"
                   >
-                    <Image src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
-                    <View>
-                      {/* <Text>{item.describe_msg}</Text> */}
+                    <Image mode="widthFix" src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
+                    <View className="list-text">
+                      <Text>{item.product_name}</Text>
                     </View>
                   </Navigator>
                 </View>

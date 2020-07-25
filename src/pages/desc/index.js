@@ -2,13 +2,13 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import './index.less'
 import { BASE_URL } from '../../config'
-import service from '../product/service'
+import service from '../home/service'
 
 export default class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      productDetail: []
+      desc: []
     }
   }
 
@@ -19,12 +19,13 @@ export default class Index extends Component {
   }
 
   getProduct = () => {
-    const { id, title } = this.$router.params
-    service.getProductDetail({
+    const { id } = this.$router.params
+    service.getBanner({
       menu_id: id,
-      product_name: title
+      parent_id: 1,
+      image_type: 1
     }).then(res => {
-      this.setState({ productDetail: res.data })
+      this.setState({ desc: res.data })
     })
   }
 
@@ -35,14 +36,14 @@ export default class Index extends Component {
   componentDidHide() { }
 
   config = {
-    navigationBarTitleText: '商品详情'
+    navigationBarTitleText: '公司简介'
   }
 
   render() {
 
     return (
-      <View className='product-detail-page'>
-        {this.state.productDetail.map(v => <Image mode="widthFix" src={`${BASE_URL}${v.image_url}`} key={v.image_url} />)}
+      <View className="wrap">
+        {this.state.desc.map(v => <Image mode="widthFix" src={`${BASE_URL}${v.image_url}`} key={v.image_url} />)}
       </View>
     )
   }

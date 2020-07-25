@@ -101,7 +101,7 @@ export default class Index extends Component {
                         key={v.menu_id}
                         onClick={this.goPageDetail.bind(null, v)}
                       >
-                        <Image src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
+                        <Image mode="widthFix" src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
                         <View className="text">{v.menu_name}</View>
                       </View>
                     ))}

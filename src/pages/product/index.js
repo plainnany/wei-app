@@ -124,7 +124,7 @@ class Index extends Component {
                 key={v.menu_id}
                 onClick={this.goPageDetail.bind(null, v)}
               >
-                <Image src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
+                <Image mode="widthFix" src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
 
                 {/* <Image
                   src={`${BASE_URL}/static/image/7fdbecd8-6846-4cab-9e0b-b14411fa22ee.jpg`}

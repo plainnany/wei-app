@@ -10,14 +10,15 @@ export default class Index extends Component {
     super(props);
     this.state = {
       activeTab: "link",
-      products: []
+      products: [],
+      project: []
     };
   }
 
   componentWillMount() { }
 
   componentDidMount() {
-    this.getProduct();
+    this.getLink();
   }
 
   componentWillUnmount() { }
@@ -32,13 +33,21 @@ export default class Index extends Component {
 
   handleTab = type => {
     this.setState({ activeTab: type });
-    this.getProduct(type);
+    if (type === 'project') {
+      this.getProject()
+    } else if (type === 'link') {
+      this.getLink()
+    } else {
+      this.getVideo();
+    }
   };
 
-  getProduct = type => {
+  getVideo = () => {
     this.setState({ loading: true })
     service.getMenu({
-      menu_id: PARAMS[type || 'link']
+      menu_id: PARAMS.video,
+      parent_id: 1,
+      image_type: 1
     }).then(res => {
       this.setState({
         products: res.data,
@@ -47,14 +56,69 @@ export default class Index extends Component {
     })
   };
 
-  goToPage = v => {
+  getLink = async () => {
+    this.setState({ loading: true })
+    const { data } = await service.getLink({
+      menu_id: PARAMS.link,
+      parent_id: 1,
+      image_type: 3
+    })
+    this.setState({ loading: false, products: data })
+  }
+
+  getProject = async () => {
+    this.setState({ loading: true })
+    const data = await service.getMenu({
+      menu_id: PARAMS.project,
+      parent_id: 1,
+      image_type: 3
+    })
+    this.setState({ loading: false, products: data.data })
+  }
+
+  goToPage = (v, index) => {
     if (this.state.activeTab === 'link') {
-      Taro.navigateTo({ url: `/pages/view/index?link=${v.describe_msg}` });
+      Taro.navigateTo({ url: `/pages/link/index?menu_id=${v.menu_id}&product_name=${v.product_name}` });
+    } else {
+      Taro.navigateTo({ url: `/pages/program/index?name=${v.product_name}&parent_id=${index + 1}` })
     }
   };
 
+  renderVideo = (products) => {
+    return (
+      <View className="video">
+        {products.map(v => (
+          <View
+            className="video_item"
+            key={v.image_id}
+          >
+            <Video src={`${BASE_URL}${v.image_url}`} />
+            <View className="text">{v.product_name}</View>
+          </View>
+        ))}
+      </View>
+    )
+  }
+
+  renderProduct = (products) => {
+    return (
+      <View className="product">
+        {products.map((v, index) => (
+          <View
+            className="product_item"
+            key={v.image_id}
+            onClick={this.goToPage.bind(null, v, index)}
+          >
+            <Image mode="widthFix" src={`${BASE_URL}${v.image_url}`} alt={v.image_name} />
+            <View className="text">{v.product_name}</View>
+          </View>
+        ))}
+      </View>
+    )
+  }
+
   render() {
-    const { loading, products, activeTab } = this.state;
+    const { loading, products, project, activeTab } = this.state;
     const tabs = [
       {
         type: "link",
@@ -86,32 +150,10 @@ export default class Index extends Component {
           <Loading />
         ) : (
             <View className="content">
-              {activeTab === 'video' ? (
-                <View className="video">
-                  {products.map(v => (
-                    <View
-                      className="video_item"
-                      key={v.image_id}
-                    >
-                      <Video src={`${BASE_URL}${v.image_url}`} />
-                      <View className="text">{v.product_name}</View>
-                    </View>
-                  ))}
-                </View>
-              ) : (
-                  <View className="product">
-                    {products.map(v => (
-                      <View
-                        className="product_item"
-                        key={v.image_id}
-                        onClick={this.goToPage.bind(null, v)}
-                      >
-                        <Image src={`${BASE_URL}${v.image_url}`} alt={v.image_name} />
-                        <View className="text">{v.product_name}</View>
-                      </View>
-                    ))}
-                  </View>
-                )}
+              {activeTab === 'video'
+                ? this.renderVideo(products)
+                : this.renderProduct(products)
+              }
             </View>
           )}
       </View>

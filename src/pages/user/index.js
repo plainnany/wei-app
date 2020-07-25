@@ -63,10 +63,11 @@ class User extends Component {
   }
 
   savePhoneNumber = (params) => {
-    console.log(params)
     const data = {
       open_id: this.props.open_id,
-      user_phone: '14212345678'
+      code: this.props.code,
+      iv: params.iv,
+      encryptedData: params.encryptedData
     }
     this.props.dispatch({
       type: 'user/savePhoneNumber',
@@ -120,7 +121,7 @@ class User extends Component {
               {
                 isLogin &&
                 <View>
-                  {this.props.is_checked_in ? <View className="check-in">已签到</View> : (
+                  {!this.props.is_checked_in ? <View className="check-in">已签到</View> : (
                     <Button className="phone" openType="getPhoneNumber" onGetPhoneNumber={this.onGetPhoneNumber}>
                       每日签到
                     </Button>
