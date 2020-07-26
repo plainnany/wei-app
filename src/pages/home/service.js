@@ -22,6 +22,10 @@ class Api {
   getLinkDetail = data => {
     return api.get({ url: '/queryProdcutDetail', data })
   }
+
+  getNewProduct = data => {
+    return api.get({ url: '/queryNewProduct', data })
+  }
 }
 
 export default new Api();

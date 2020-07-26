@@ -35,8 +35,8 @@ export default {
       })
     },
     *product(_, { call, put }) {
-      const powder = yield call(homeApi.getBanner, {
-        menu_id: PARAMS.new,
+      const powder = yield call(homeApi.getNewProduct, {
+        operator_mp: PARAMS.new,
         parent_id: 1,
         image_type: 1
       })
@@ -47,8 +47,8 @@ export default {
         image_type: 3
       })
 
-      const water = yield call(homeApi.getBanner, {
-        menu_id: PARAMS.new,
+      const water = yield call(homeApi.getNewProduct, {
+        operator_mp: PARAMS.new,
         parent_id: 2,
         image_type: 1
       })

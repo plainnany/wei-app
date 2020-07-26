@@ -16,11 +16,15 @@ export default class Index extends Component {
 
   componentDidMount() {
     this.getProduct()
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   getProduct = () => {
     const { id, title } = this.$router.params
-    service.getProductDetail({
+    service.getNewProductDetail({
       menu_id: id,
       product_name: title
     }).then(res => {

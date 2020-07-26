@@ -41,7 +41,7 @@ class GoodsList extends Component {
                 <View key={item.image_id} className="list-item">
                   <Navigator
                     openType="navigate"
-                    url={`/pages/productDetail/index?id=${PARAMS.new}&title=${item.product_name}`}
+                    url={`/pages/productDetail/index?id=${PARAMS.new}&title=${item.product_name}&image_url=${item.image_url}`}
                     hoverClass="none"
                   >
                     <Image mode="widthFix" src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
