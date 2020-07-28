@@ -1,5 +1,5 @@
 import Taro, { Component, getUserInfo } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image, Button } from '@tarojs/components'
 import { AtFloatLayout, AtButton } from "taro-ui"
 import { connect } from '@tarojs/redux'
 import './index.less'
@@ -7,6 +7,7 @@ import { BASE_URL } from '../../config'
 import service from '../product/service'
 import watchService from '../watch/service'
 import home_icon from '../../images/tab/home.png'
+import share_icon from '../../images/icon/share.png'
 
 @connect(({ user }) => ({
   ...user
@@ -65,7 +66,8 @@ class Index extends Component {
     this.setState({ confirmLoading: true })
     watchService.watchProduct({
       product_collect: watched ? 0 : 1,
-      image_id: this.$router.params.image_id
+      image_id: this.$router.params.image_id,
+      open_id: this.props.open_id
     }).then(res => {
       if (res.data === 'ok') {
         this.setState({
@@ -94,7 +96,6 @@ class Index extends Component {
   render() {
     const { loading } = this.state
     const { product, detail } = this.state.productDetail
-    console.log('product-detail', this.state.productDetail, this.$router.params)
     return (
       <View className='product-detail-page'>
         <View className="card">
@@ -121,20 +122,29 @@ class Index extends Component {
             <View className="home"><Image src={home_icon} /></View>
             <Text>首页</Text>
           </View>
-          <View className="watch">
-            <AtButton
-              type={this.state.watched ? 'primary' : 'secondary'}
-              onClick={this.handleWatch}
-              loading={this.state.confirmLoading}
-              openType={this.props.session_key ? '' : 'getUserInfo'}
-              onGetUserInfo={this.getUserInfo}
-            >
-              {this.state.watched ? '取消收藏' : '加入收藏'}
-            </AtButton>
+          <View className="action">
+            <View className="watch">
+
+              <AtButton
+                type={this.state.watched ? 'primary' : 'secondary'}
+                onClick={this.handleWatch}
+                loading={this.state.confirmLoading}
+                openType={this.props.session_key ? '' : 'getUserInfo'}
+                onGetUserInfo={this.getUserInfo}
+              >
+                {this.state.watched ? '取消收藏' : '加入收藏'}
+              </AtButton>
+            </View>
+            <View className="share" >
+              <Button openType="share">
+                <View>
+                  <Image src={share_icon} />
+                </View>
+                <Text>分享</Text>
+              </Button>
+            </View>
           </View>
-          {/* <View className="watch" onClick={this.handleWatch}>
-            加入收藏
-            </View> */}
+
         </View>
       </View>
     )
