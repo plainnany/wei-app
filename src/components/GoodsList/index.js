@@ -1,9 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image, Navigator } from "@tarojs/components";
 import PropTypes from "prop-types";
+import { connect } from '@tarojs/redux'
 import "./index.less";
 import { BASE_URL, PARAMS } from "../../config";
 
+@connect(({ home, loading }) => ({
+  ...home,
+  ...loading
+}))
 class GoodsList extends Component {
   static propTypes = {
     list: PropTypes.array
@@ -41,10 +46,14 @@ class GoodsList extends Component {
                 <View key={item.image_id} className="list-item">
                   <Navigator
                     openType="navigate"
-                    url={`/pages/productDetail/index?id=${PARAMS.new}&title=${item.product_name}&image_url=${item.image_url}`}
+                    url={`/pages/productDetail/index?id=${item.menu_id}&image_id=${item.image_id}`}
                     hoverClass="none"
                   >
-                    <Image mode="widthFix" src={`${BASE_URL}${item.image_url}`} className="list-item-image" />
+                    <Image
+                      mode="widthFix"
+                      src={`${BASE_URL}${item.image_url}`}
+                      className="list-item-image"
+                    />
                     <View className="list-text">
                       <Text>{item.product_name}</Text>
                     </View>

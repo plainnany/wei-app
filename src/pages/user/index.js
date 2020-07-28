@@ -8,6 +8,7 @@ import avatar_img from '../../images/user/avatar.png'
 import score_img from '../../images/user/score.png'
 import about_img from '../../images/user/about.png'
 import address_img from '../../images/user/address.png'
+import follow_img from '../../images/user/follow.png'
 
 @connect(({ user, common }) => ({
   ...common,
@@ -66,6 +67,7 @@ class User extends Component {
     const data = {
       open_id: this.props.open_id,
       code: this.props.code,
+      session_key: this.props.session_key,
       iv: params.iv,
       encryptedData: params.encryptedData
     }
@@ -121,7 +123,7 @@ class User extends Component {
               {
                 isLogin &&
                 <View>
-                  {!this.props.is_checked_in ? <View className="check-in">已签到</View> : (
+                  {this.props.is_checked_in ? <View className="check-in">已签到</View> : (
                     <Button className="phone" openType="getPhoneNumber" onGetPhoneNumber={this.onGetPhoneNumber}>
                       每日签到
                     </Button>
@@ -173,24 +175,16 @@ class User extends Component {
               <Text>收货地址</Text>
             </View>
           </View>
-          {/* <View
+          <View
             className="item"
-            onClick={() => Taro.navigateTo({ url: '/pages/about/index' })}
+            data-url="/pages/watch/index"
+            onClick={this.goToPage}
           >
             <View className="left">
-              <Image className="icon-left" src={about_img} />
-              <Text>关于</Text>
+              <Image className="icon-left" src={follow_img} />
+              <Text>我的收藏</Text>
             </View>
-          </View> */}
-          {/* <View
-            className="item"
-            onClick={() => Taro.navigateTo({ url: '/pages/about/index' })}
-          >
-            <View className="left">
-              <Image className="icon-left" src={about_img} />
-              <Button openType="getPhoneNumber" onGetPhoneNumber={}>获取手机号</Button>
-            </View>
-          </View> */}
+          </View>
         </View>
       </View>
     )

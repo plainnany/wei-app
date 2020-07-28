@@ -58,6 +58,18 @@ export default {
         parent_id: 2,
         image_type: 3
       })
+      const data = [{
+        type: '粉末涂料新品',
+        banner: (powder_image.data[0] || {}).image_url,
+        title: '粉末涂料新品',
+        imageList: powder.data
+      },
+      {
+        type: '水性涂料新品',
+        banner: (water_image.data[0] || {}).image_url,
+        title: '水性涂料新品',
+        imageList: water.data
+      }]
       yield put({
         type: 'save',
         payload: {
@@ -75,6 +87,7 @@ export default {
           }]
         }
       })
+      return yield data
     }
   },
   reducers: {

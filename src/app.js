@@ -44,7 +44,8 @@ class App extends Component {
       "pages/addressUpdate/index",
       "pages/productDetail/index",
       "pages/productItem/index",
-      "pages/link/index"
+      "pages/link/index",
+      "pages/watch/index"
     ],
     tabBar: {
       list: [
