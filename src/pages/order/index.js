@@ -56,26 +56,28 @@ class Index extends Component {
         {loading ? (
           <Loading />
         ) : (
-            <View className="content">
-              <View className="order">
-                {orders.map((v, index) => (
-                  <View
-                    className="order_item"
-                    key={index}
-                  >
-                    <View className="present">
-                      <View>礼品 {v.present_name} × {v.coin_num}</View>
-                      <Text className="score">24 积分</Text>
+            orders.length === 0
+              ? <View className="empty">暂无数据</View>
+              : <View className="content">
+                <View className="order">
+                  {orders.map((v, index) => (
+                    <View
+                      className="order_item"
+                      key={index}
+                    >
+                      <View className="present">
+                        <View>礼品 {v.present_name} × {v.coin_num}</View>
+                        <Text className="score">24 积分</Text>
+                      </View>
+                      <View className="concat">
+                        <View>收货地址 {v.consignee_address}</View>
+                        <View>收货人 {v.consignee_name}</View>
+                        <View>手机号 {v.consignee_phone}</View>
+                      </View>
                     </View>
-                    <View className="concat">
-                      <View>收货地址 {v.consignee_address}</View>
-                      <View>收货人 {v.consignee_name}</View>
-                      <View>手机号 {v.consignee_phone}</View>
-                    </View>
-                  </View>
-                ))}
+                  ))}
+                </View>
               </View>
-            </View>
           )}
       </View>
     )

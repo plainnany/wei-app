@@ -42,7 +42,7 @@ class ScorePage extends Component {
                 <View
                   className="list-item"
                   key={product.id}
-                  onClick={() => Taro.navigateTo({ url: `/pages/productDetail/index?id=${product.menu_id}&image_id=${product.image_id}` })}
+                  onClick={() => Taro.navigateTo({ url: `/pages/productDetail/index?id=${product.menu_id}&image_id=${product.image_id}&title=${product.product_name}` })}
                 >
                   <Image src={`${BASE_URL}${product.image_url}`} />
                   <Text>

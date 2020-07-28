@@ -136,8 +136,6 @@ class User extends Component {
         <View className="login">
           <View
             className="item"
-            data-url="/pages/addressList/index"
-            onClick={this.goToPage}
           >
             <View className="left">
               <Image className="icon-left" src={score_img} />

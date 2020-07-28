@@ -35,7 +35,7 @@ class Index extends Component {
     const { id, title } = this.$router.params
     service.getProductDetail({
       menu_id: id,
-      product_name: title
+      product_name: decodeURIComponent(title)
     }).then(res => {
       this.setState({
         productDetail: res.data,
@@ -94,14 +94,16 @@ class Index extends Component {
   render() {
     const { loading } = this.state
     const { product, detail } = this.state.productDetail
+    console.log('product-detail', this.state.productDetail, this.$router.params)
     return (
       <View className='product-detail-page'>
         <View className="card">
           {product.image_url && <Image src={`${BASE_URL}${product.image_url}`} mode="widthFix" />}
+          <Text style={{ marginTop: '24rpx' }}>{product.product_name}</Text>
         </View>
         <View className="desc card">
           <Text>规格描述</Text>
-          <Text className="view" onClick={this.showModal}>查看</Text>
+          <Text className="view" onClick={this.showModal} decode={true}>查看 &gt;</Text>
         </View>
         <AtFloatLayout
           isOpened={this.state.visible}
@@ -121,7 +123,7 @@ class Index extends Component {
           </View>
           <View className="watch">
             <AtButton
-              type='primary'
+              type={this.state.watched ? 'primary' : 'secondary'}
               onClick={this.handleWatch}
               loading={this.state.confirmLoading}
               openType={this.props.session_key ? '' : 'getUserInfo'}
