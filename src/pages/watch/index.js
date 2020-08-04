@@ -1,10 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
+import { connect } from '@tarojs/redux'
 import "./index.less";
 import { BASE_URL } from '../../config'
 import service from './service'
 import Loading from '../../components/loading'
 
+@connect(({ user }) => ({
+  ...user
+}))
 class ScorePage extends Component {
   constructor(props) {
     super(props)
@@ -20,7 +24,7 @@ class ScorePage extends Component {
 
   componentDidMount = () => {
     service.getWatchedProduct({
-      product_collect: 1
+      open_id: this.props.open_id
     }).then(res => {
       this.setState({
         products: res.data,

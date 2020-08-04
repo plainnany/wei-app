@@ -27,7 +27,6 @@
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
   text {
     font-size: 26px;
@@ -35,7 +34,6 @@
 
   .action {
     font-size: 36px;
-    margin-left: 32px;
     flex: 1;
     display: flex;
     align-items: center;
@@ -47,13 +45,15 @@
 
   .share {
     text-align: center;
+    margin: 0 32px;
     button {
       background-color: #fff;
       font-weight: normal;
-      font-size: 26px;
+      font-size: 22px;
       color: inherit;
-      line-height: 1;
-      padding-right: 0;
+      line-height: 36px;
+      padding: 0;
+
       &::after{
         content: '';
         border: none;
@@ -62,16 +62,18 @@
     image {
       width: 45px;
       height: 45px;
-      margin-bottom: 8px;
     }
   }
 
 }
 
 .home {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto;
+  text-align: center;
+  image {
+    width: 45px;
+    height: 45px;
+    margin: 0 auto;
+  }
 }
 
 .card {
@@ -83,9 +85,43 @@
 .desc {
   display: flex;
   justify-content: space-between;
-  // padding:24px;
-
+  align-items: center;
   .view {
     font-size: 24px;
+    color: #aaa;
+  }
+}
+
+.title {
+  margin: 24rpx 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.watched {
+  background-color: #004da1;
+  color: #fff;
+}
+
+.unwatched {
+  background-color: #00a95f;
+  color: #fff;
+}
+
+.main-image {
+  box-shadow: 2px 2px 10px #ccc;
+}
+.left {
+  margin-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 36px;
+}
+
+.custom {
+  text-align: center;
+  image {
+    width: 45px;
+    height: 45px;
   }
 }

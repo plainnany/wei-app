@@ -5,9 +5,10 @@ import "./list.less";
 import Loading from "../../components/loading";
 import { BASE_URL } from "../../config/index";
 
-@connect(({ product, loading }) => ({
+@connect(({ product, loading, user }) => ({
   ...product,
-  ...loading
+  ...loading,
+  ...user
 }))
 class Index extends Component {
   constructor(props) {
@@ -47,10 +48,17 @@ class Index extends Component {
     });
   };
 
-  goPageDetail = v => {
-    Taro.navigateTo({
-      url: `/pages/productDetail/index?id=${v.menu_id}&title=${v.product_name}`
-    });
+  goPageDetail = item => {
+    const url = `/pages/productDetail/index?id=${item.menu_id}&title=${item.product_name}`
+    if (!this.props.open_id) {
+      Taro.showToast({
+        title: '暂无登录，请先授权登录',
+        icon: 'none'
+      })
+      Taro.navigateTo({ url: `/pages/auth/index?redirectPath=/pages/productDetail/index&id=${item.menu_id}&title=${item.product_name}` })
+      return
+    }
+    Taro.navigateTo({ url })
   };
 
   render() {

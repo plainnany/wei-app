@@ -18,6 +18,11 @@ class Api {
     url: '/queryNewProductDetail',
     data
   })
+
+  getProductCollect = data => api.get({
+    url: '/queryOneProductCollect',
+    data
+  })
 }
 
 export default new Api()

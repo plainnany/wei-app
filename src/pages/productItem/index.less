@@ -6,46 +6,51 @@
   width: 100%;
   height: 100%;
   padding: 0 16px;
-  background-color: #fafafa;
   font-size: 28px;
 }
 
 .tab {
+  position: fixed;
   width: 100%;
-  padding: 0 8px;
+  left: 0;
+  right: 0;
+  top: 0;
   display: flex;
   overflow: auto;
   font-size: 32px;
+  z-index: 1;
+  background-color: #fff;
 
   &_item {
     text-align: center;
     padding: 12px 0;
     flex: 1;
-    background-color: #eee;
+   
     &:last-child {
       border-right: none;
     }
     &_active {
-      background-color: #ccc;
+      color: #00a95f;
+      &_bar {
+        width: 48px;
+        height: 6px;
+        border-radius: 4px;
+        background-color: #00a95f;
+        margin: 12px auto 0;
+      }
     }
   }
 }
 
 .content {
   background-color: #fff;
-  margin: 24rpx 0;
+  margin: 70px 0 24px 0;
 }
 
 .product {
-  display: flex;
-  flex-wrap: wrap;
-
   &_item {
-    width: 50%;
+    width: 100%;
     padding: 12rpx;
-    image {
-      max-height: 240px;
-    }
 
     .text {
       text-align: center;

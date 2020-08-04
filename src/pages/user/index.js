@@ -1,4 +1,4 @@
-import Taro, { Component, connectSocket } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './index.less'
@@ -6,7 +6,6 @@ import order_img from '../../images/user/order.png'
 import change_img from '../../images/user/change.png'
 import avatar_img from '../../images/user/avatar.png'
 import score_img from '../../images/user/score.png'
-import about_img from '../../images/user/about.png'
 import address_img from '../../images/user/address.png'
 import follow_img from '../../images/user/follow.png'
 
@@ -52,8 +51,12 @@ class User extends Component {
   }
 
   checkin = () => {
+    const add_integral = 5
     this.props.dispatch({
-      type: 'user/addScore'
+      type: 'user/addScore',
+      payload: { add_integral, forward_or_sign: 'Y' }
+    }).then(() => {
+      Taro.showToast({ title: `签到成功！积分+${add_integral}`, icon: "none" });
     })
   }
 
@@ -160,7 +163,7 @@ class User extends Component {
           >
             <View className="left">
               <Image className="icon-left" src={change_img} />
-              <Text>积分兑换</Text>
+              <Text>我的福利</Text>
             </View>
           </View>
           <View

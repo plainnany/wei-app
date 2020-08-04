@@ -4,6 +4,7 @@ import Index from "./pages/home/index";
 import models from "./models/index";
 import dva from "./utils/dva";
 import "./styles/base.less";
+import "./styles/iconfont.less";
 import 'taro-ui/dist/style/index.scss'
 
 const dvaApp = dva.createApp({
@@ -44,8 +45,9 @@ class App extends Component {
       "pages/addressUpdate/index",
       "pages/productDetail/index",
       "pages/productItem/index",
-      "pages/link/index",
-      "pages/watch/index"
+      "pages/watch/index",
+      "pages/album/index",
+      "pages/auth/index"
     ],
     tabBar: {
       list: [

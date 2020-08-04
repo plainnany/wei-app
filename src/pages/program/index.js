@@ -20,7 +20,8 @@ export default class Index extends Component {
   componentWillMount() { }
 
   componentDidMount() {
-    this.getProject()
+    this.getProject(this.$router.params.name)
+    console.log()
     Taro.setNavigationBarTitle({
       title: this.$router.params.name
     })

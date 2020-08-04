@@ -10,7 +10,8 @@ export default {
     new_product: [],
     page: 1,
     products: [],
-    icons: []
+    icons: [],
+    swtich_brand_tab: ''
   },
   effects: {
     *load(_, { call, put }) {

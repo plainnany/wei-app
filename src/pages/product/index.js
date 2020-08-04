@@ -1,6 +1,7 @@
 import Taro, { Component, connectSocket } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
+import { AtFloatLayout } from "taro-ui";
 import "./index.less";
 import Loading from "../../components/loading";
 import { BASE_URL } from "../../config/index";
@@ -17,7 +18,6 @@ class Index extends Component {
       third_menu_list: [],
       menu_child: []
     };
-    this.id = 1;
   }
 
   componentWillMount() { }
@@ -106,15 +106,24 @@ class Index extends Component {
                 <View
                   key={child.menu_id}
                   onClick={this.onClick.bind(null, child)}
-                  className={`sider-item-depth-2 ${
-                    activeTab === child.menu_id ? "sider-item-active" : ""
-                    }`}
+                  className={`sider-item-depth-2 ${activeTab === child.menu_id ? "sider-item-active" : ""}`}
                 >
                   {child.menu_name}
                 </View>
               ))}
             </View>
           ))}
+          <View className="footer">
+            <View
+              className="score"
+              onClick={() => Taro.navigateTo({ url: '/pages/score/index' })}
+            >
+              我的福利
+          </View>
+            <View onClick={() => Taro.makePhoneCall({ phoneNumber: '18664212905' })}>
+              在线客服
+            </View>
+          </View>
         </View>
         <View className="content">
           <View className="product">
@@ -125,11 +134,6 @@ class Index extends Component {
                 onClick={this.goPageDetail.bind(null, v)}
               >
                 <Image mode="widthFix" src={`${BASE_URL}${v.menu_url}`} alt={v.image_name} />
-
-                {/* <Image
-                  src={`${BASE_URL}/static/image/7fdbecd8-6846-4cab-9e0b-b14411fa22ee.jpg`}
-                  alt={v.image_name}
-                /> */}
                 <View className="text">{v.menu_name}</View>
               </View>
             ))}

@@ -40,7 +40,7 @@ class Index extends Component {
   componentDidHide() { }
 
   config = {
-    navigationBarTitleText: "首页"
+    navigationBarTitleText: "千江官方小程序"
   };
 
   goToPage = icon => {
@@ -50,7 +50,11 @@ class Index extends Component {
       Taro.navigateTo({ url: `/pages/productItem/index?id=2` });
     } else if (icon.product_name === '水性涂料') {
       Taro.navigateTo({ url: `/pages/productItem/index?id=14` });
-    } else if (icon.product_name === '解决方案') {
+    } else if (icon.product_name === '工程案例') {
+      this.props.dispatch({
+        type: 'home/save',
+        payload: { swtich_brand_tab: 'project' }
+      })
       Taro.switchTab({ url: '/pages/brand/index' })
     }
   };
@@ -75,45 +79,6 @@ class Index extends Component {
               </View>
             </View>
           ))}
-          {/* <View
-            className={`tabs-item tabs-item-info`}
-            data-url={`/pages/desc/index?id=${PARAMS.info}`}
-            onClick={this.goToPage}
-          >
-            <Text className="iconfont">&#xe709;</Text>
-            <View>公司简介</View>
-          </View>
-          <View
-            className="tabs-item"
-          >
-            <Navigator
-              url="/pages/productItem/index?id=2"
-              openType="navigate"
-              hoverClass="none"
-            >
-              <Text className="iconfont">&#xe602;</Text>
-              <View>粉末涂料</View>
-            </Navigator>
-          </View>
-          <View
-            className="tabs-item"
-          >
-            <Navigator
-              url="/pages/productItem/index?id=14"
-              openType="navigate"
-              hoverClass="none"
-            >
-              <Text className="iconfont">&#xe606;</Text>
-              <View>水性涂料</View>
-            </Navigator>
-          </View>
-          <View
-            className="tabs-item"
-            onClick={() => Taro.switchTab({ url: '/pages/brand/index' })}
-          >
-            <Text className="iconfont">&#xe75d;</Text>
-            <View>解决方案</View>
-          </View> */}
         </View>
         <GoodsList
           list={products}

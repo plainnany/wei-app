@@ -67,12 +67,13 @@ class Index extends Component {
                     >
                       <View className="present">
                         <View>礼品 {v.present_name} × {v.coin_num}</View>
-                        <Text className="score">24 积分</Text>
+                        {/* <Text className="score">24 积分</Text> */}
                       </View>
                       <View className="concat">
                         <View>收货地址 {v.consignee_address}</View>
                         <View>收货人 {v.consignee_name}</View>
                         <View>手机号 {v.consignee_phone}</View>
+                        <View>运单号 {v.waybill_num || '暂无运单号'}</View>
                       </View>
                     </View>
                   ))}

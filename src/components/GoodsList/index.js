@@ -5,7 +5,8 @@ import { connect } from '@tarojs/redux'
 import "./index.less";
 import { BASE_URL, PARAMS } from "../../config";
 
-@connect(({ home, loading }) => ({
+@connect(({ user, home, loading }) => ({
+  ...user,
   ...home,
   ...loading
 }))
@@ -18,10 +19,17 @@ class GoodsList extends Component {
     list: []
   };
 
-  gotoDetail = e => {
-    Taro.navigateTo({
-      url: `/pages/detail/index?id=${e.currentTarget.dataset.id}`
-    });
+  gotoDetail = item => {
+    const url = `/pages/productDetail/index?id=${item.menu_id}&title=${item.product_name}`
+    if (!this.props.open_id) {
+      Taro.showToast({
+        title: '暂无登录，请先授权登录',
+        icon: 'none'
+      })
+      Taro.navigateTo({ url: `/pages/auth/index?redirectPath=/pages/productDetail/index&id=${item.menu_id}&title=${item.product_name}` })
+      return
+    }
+    Taro.navigateTo({ url });
   };
 
   renderList = products => {
@@ -31,24 +39,21 @@ class GoodsList extends Component {
           <View className="content" key={v.id}>
             <View className="title">
               <Text>{v.title}</Text>
+            </View>
+            <View className="banner">
               <Navigator
                 className="more"
                 openType="switchTab"
-                url={`/pages/product/index?type=${v.type}`}
+                url={`/pages/product/index`}
                 hoverClass="none"
               >
-                更多
+                <Image mode="widthFix" src={`${BASE_URL}${v.banner}`} />
               </Navigator>
             </View>
-            <View className="banner"><Image mode="widthFix" src={`${BASE_URL}${v.banner}`} /></View>
             <View className="list">
               {v.imageList.map(item => (
                 <View key={item.image_id} className="list-item">
-                  <Navigator
-                    openType="navigate"
-                    url={`/pages/productDetail/index?id=${item.menu_id}&image_id=${item.image_id}&title=${item.product_name}`}
-                    hoverClass="none"
-                  >
+                  <View onClick={() => this.gotoDetail(item)}>
                     <Image
                       mode="widthFix"
                       src={`${BASE_URL}${item.image_url}`}
@@ -57,7 +62,7 @@ class GoodsList extends Component {
                     <View className="list-text">
                       <Text>{item.product_name}</Text>
                     </View>
-                  </Navigator>
+                  </View>
                 </View>
               ))}
             </View>

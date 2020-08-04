@@ -6,14 +6,16 @@
   width: 100%;
   height: 100%;
   padding: 0 24px;
-  background-color: #fafafa;
   font-size: 28px;
   overflow: auto;
 }
 
 .tab {
   position: fixed;
-  width: calc(100% - 48px);
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
   display: flex;
   overflow: auto;
   font-size: 32px;
@@ -23,12 +25,20 @@
     text-align: center;
     padding: 12px 0;
     flex: 1;
-    background-color: #eee;
+    background-color: #fff;
+
     &:last-child {
       border-right: none;
     }
     &_active {
-      background-color: #ccc;
+      color: #aaa;
+      &_bar {
+        width: 48px;
+        height: 6px;
+        border-radius: 4px;
+        // background-color: #00a95f;
+        margin: 12px auto 0;
+      }
     }
   }
 }

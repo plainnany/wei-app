@@ -84,13 +84,14 @@ export default class Index extends Component {
               <View>
                 <View className="tab">
                   {tabs.map(v => (
-                    <Text
-                      className={`tab_item ${activeTab === v.menu_id ? "tab_item_active" : ""}`}
-                      key={v.menu_id}
-                      onClick={this.handleTab.bind(null, v.menu_id)}
-                    >
-                      {v.menu_name}
-                    </Text>
+                    <View key={v.menu_id} className={`tab_item ${activeTab === v.menu_id ? "tab_item_active" : ""}`}>
+                      <Text
+                        onClick={this.handleTab.bind(null, v.menu_id)}
+                      >
+                        {v.menu_name}
+                      </Text>
+                      {activeTab === v.menu_id && <View className="tab_item_active_bar" />}
+                    </View>
                   ))}
                 </View>
                 <View className="content">

@@ -137,23 +137,27 @@ export default {
         icon: "none"
       });
     },
-    *addScore(_, { call, put, select }) {
+    *addScore({ payload }, { call, put, select }) {
       const { open_id } = yield select(state => state.user)
       const response = yield call(service.addScore, {
         open_id,
-        add_integral: 5,
-        forward_or_sign: 'Y' // Y: 签到， N: 转发
+        add_integral: payload.add_integral,
+        forward_or_sign: payload.forward_or_sign // Y: 签到， N: 转发
       })
+      const is_checked_in = response.sign_status === 'Y'
       if (response.data === 'ok') {
+        const params = {
+          user_integral: response.user_integral
+        }
+        if (payload.forward_or_sign === 'Y') {
+          params.is_checked_in = is_checked_in
+        }
         yield put({
           type: 'save',
-          payload: {
-            user_integral: response.user_integral,
-            is_checked_in: response.sign_status === 'Y'
-          }
+          payload: params
         })
       }
-      Taro.showToast({ title: response.msg, icon: "none" });
+      return response
     },
     *savePhoneNumber({ payload }, { call, put, select }) {
       const response = yield call(service.savePhoneNumber, payload)
