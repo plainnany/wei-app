@@ -36,59 +36,32 @@ export default {
       })
     },
     *product(_, { call, put }) {
-      const powder = yield call(homeApi.getNewProduct, {
-        operator_mp: PARAMS.new,
-        parent_id: 1,
-        image_type: 1
-      })
-
-      const powder_image = yield call(homeApi.getBanner, {
-        menu_id: PARAMS.new,
-        parent_id: 1,
-        image_type: 3
-      })
-
-      const water = yield call(homeApi.getNewProduct, {
-        operator_mp: PARAMS.new,
-        parent_id: 2,
-        image_type: 1
-      })
-
-      const water_image = yield call(homeApi.getBanner, {
+      const banner_response = yield call(homeApi.getBanner, {
         menu_id: PARAMS.new,
         parent_id: 2,
         image_type: 3
       })
-      const data = [{
-        type: '粉末涂料新品',
-        banner: (powder_image.data[0] || {}).image_url,
-        title: '粉末涂料新品',
-        imageList: powder.data
-      },
-      {
-        type: '水性涂料新品',
-        banner: (water_image.data[0] || {}).image_url,
-        title: '水性涂料新品',
-        imageList: water.data
-      }]
+      const banner_list = banner_response.data
+
+      const results = []
+      for (let i = 0; i < banner_list.length; i++) {
+        const res = yield call(homeApi.getNewProduct, {
+          operator_mp: PARAMS.new,
+          parent_id: i + 1,
+          image_type: 1
+        })
+        results.push({
+          type: banner_list[i].describe_msg,
+          banner: (banner_list[i] || {}).image_url,
+          title: banner_list[i].describe_msg,
+          imageList: res.data
+        })
+      }
       yield put({
         type: 'save',
-        payload: {
-          products: [{
-            type: '粉末涂料新品',
-            banner: (powder_image.data[0] || {}).image_url,
-            title: '粉末涂料新品',
-            imageList: powder.data
-          },
-          {
-            type: '水性涂料新品',
-            banner: (water_image.data[0] || {}).image_url,
-            title: '水性涂料新品',
-            imageList: water.data
-          }]
-        }
+        payload: { products: results }
       })
-      return yield data
+      return yield results
     }
   },
   reducers: {

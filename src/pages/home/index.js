@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Navigator } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import MySwiper from "../../components/MySwiper";
 import GoodsList from "../../components/GoodsList";
@@ -32,6 +32,10 @@ class Index extends Component {
     this.props.dispatch({
       type: "home/icons"
     });
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   componentWillUnmount() { }
