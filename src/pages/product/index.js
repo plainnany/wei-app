@@ -16,7 +16,8 @@ class Index extends Component {
     this.state = {
       activeTab: "",
       third_menu_list: [],
-      menu_child: []
+      menu_child: [],
+      currentParentId: ''
     };
   }
 
@@ -52,20 +53,21 @@ class Index extends Component {
         const { activeTab, third_menu_list } = this.getChildMenu(parent);
         this.setState({
           activeTab,
-          third_menu_list
+          third_menu_list,
+          currentParentId: parent.menu_id
         });
       });
   };
 
-  onClick = menu => {
-    this.setState({ activeTab: menu.menu_id });
+  onClick = (menu, parentId) => {
+    this.setState({ activeTab: menu.menu_id, currentParentId: parentId });
     const third_menu_list = menu.child || [];
     this.setState({ third_menu_list });
   };
 
-  clickParent = parent => {
+  clickParent = (parent, parentId) => {
     const { activeTab, third_menu_list } = this.getChildMenu(parent);
-    this.setState({ activeTab, third_menu_list });
+    this.setState({ activeTab, third_menu_list, currentParentId: parentId });
   };
 
   getChildMenu = parent => {
@@ -87,32 +89,36 @@ class Index extends Component {
 
   render() {
     const { menu_list, effects } = this.props;
-    const { activeTab, third_menu_list } = this.state;
+    const { activeTab, third_menu_list, currentParentId } = this.state;
     if (effects["product/product"]) {
       return <Loading />;
     }
     return (
       <View className="wrap">
         <View className="sider">
-          {menu_list.map(menu => (
-            <View className="sider-item" key={menu.menu_id}>
-              <View
-                onClick={this.clickParent.bind(null, menu)}
-                className="sider-item-depth-1"
-              >
-                {menu.menu_name}
-              </View>
-              {menu.child.map(child => (
+          <View className="menu-wrap">
+            {menu_list.map(menu => (
+              <View className="sider-item" key={menu.menu_id}>
                 <View
-                  key={child.menu_id}
-                  onClick={this.onClick.bind(null, child)}
-                  className={`sider-item-depth-2 ${activeTab === child.menu_id ? "sider-item-active" : ""}`}
+                  onClick={this.clickParent.bind(null, menu, menu.menu_id)}
+                  className="sider-item-depth-1"
                 >
-                  {child.menu_name}
+                  {menu.menu_name}
                 </View>
-              ))}
-            </View>
-          ))}
+                <View className={currentParentId !== menu.menu_id ? 'hidden' : ''}>
+                  {menu.child.map(child => (
+                    <View
+                      key={child.menu_id}
+                      onClick={this.onClick.bind(null, child, menu.menu_id)}
+                      className={`sider-item-depth-2 ${activeTab === child.menu_id ? "sider-item-active" : ""}`}
+                    >
+                      {child.menu_name}
+                    </View>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </View>
           <View className="footer">
             <View
               className="score"

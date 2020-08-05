@@ -4,7 +4,7 @@ import Index from "./pages/home/index";
 import models from "./models/index";
 import dva from "./utils/dva";
 import "./styles/base.less";
-import "./styles/iconfont.less";
+// import "./styles/iconfont.less";
 import 'taro-ui/dist/style/index.scss'
 
 const dvaApp = dva.createApp({

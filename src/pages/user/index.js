@@ -8,6 +8,7 @@ import avatar_img from '../../images/user/avatar.png'
 import score_img from '../../images/user/score.png'
 import address_img from '../../images/user/address.png'
 import follow_img from '../../images/user/follow.png'
+import custom_img from '../../images/user/customer.png'
 
 @connect(({ user, common }) => ({
   ...common,
@@ -184,6 +185,15 @@ class User extends Component {
             <View className="left">
               <Image className="icon-left" src={follow_img} />
               <Text>我的收藏</Text>
+            </View>
+          </View>
+          <View
+            className="item"
+            onClick={() => Taro.makePhoneCall({ phoneNumber: '18664212905' })}
+          >
+            <View className="left">
+              <Image className="icon-left" src={custom_img} />
+              <Text>在线客服</Text>
             </View>
           </View>
         </View>

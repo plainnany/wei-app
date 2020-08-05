@@ -5,6 +5,7 @@ import MySwiper from "../../components/MySwiper";
 import GoodsList from "../../components/GoodsList";
 import "./index.less";
 import Footer from "../../components/footer";
+import custom_icon from '../../images/icon/customer.png'
 import { PARAMS, BASE_URL } from '../../config'
 
 @connect(({ home, loading }) => ({
@@ -79,6 +80,9 @@ class Index extends Component {
               </View>
             </View>
           ))}
+        </View>
+        <View className="custom" onClick={() => Taro.makePhoneCall({ phoneNumber: '18664212905' })}>
+          <Image src={custom_icon} mode="widthFix" />
         </View>
         <GoodsList
           list={products}
