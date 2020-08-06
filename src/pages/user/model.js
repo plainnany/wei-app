@@ -161,6 +161,11 @@ export default {
     },
     *savePhoneNumber({ payload }, { call, put, select }) {
       const response = yield call(service.savePhoneNumber, payload)
+      const user_phone = payload.encryptedData
+      yield put({
+        type: 'save',
+        payload: { user_phone }
+      })
       return yield response
     }
   },

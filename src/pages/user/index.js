@@ -38,6 +38,10 @@ class User extends Component {
       })
       return
     }
+
+    if (!this.props.user_phone) {
+      return
+    }
     Taro.navigateTo({
       url: e.currentTarget.dataset.url,
     })
@@ -63,11 +67,21 @@ class User extends Component {
 
   onGetPhoneNumber = (e) => {
     if (e.detail.errMsg === 'getPhoneNumber:ok') {
-      this.savePhoneNumber(e.detail)
+      this.savePhoneNumber(e.detail, () => {
+        this.checkin()
+      })
     }
   }
 
-  savePhoneNumber = (params) => {
+  getPhoneNumber = (e, path) => {
+    if (e.detail.errMsg === 'getPhoneNumber:ok') {
+      this.savePhoneNumber(e.detail, () => {
+        Taro.navigateTo({ url: `/pages/${path}/index` })
+      })
+    }
+  }
+
+  savePhoneNumber = (params, callback) => {
     const data = {
       open_id: this.props.open_id,
       code: this.props.code,
@@ -80,26 +94,26 @@ class User extends Component {
       payload: data
     }).then(res => {
       if (res.data === 'ok') {
-        this.checkin()
+        callback && callback()
       }
     })
   }
 
-  onShareAppMessage(res) {
-    console.log(res)
-    return {
-      title: '自定义转发标题',
-      path: `自定义转发的路径`,
-      imageUrl: '自定义转发的图片',
-      success: function (res) {
-        console.log(res);
-        console.log("转发成功:" + JSON.stringify(res));
-      },
-      fail: function (res) {
-        // 转发失败
-        console.log("转发失败:" + JSON.stringify(res));
-      }
+  renderText = (path, text) => {
+    const isLogin = Taro.getStorageSync('session_key')
+    const hasPhone = this.props.user_phone
+    if (!isLogin || hasPhone) {
+      return <Text>{text}</Text>
     }
+    return (
+      <Button
+        className="clear"
+        openType="getPhoneNumber"
+        onGetPhoneNumber={e => this.getPhoneNumber(e, path)}
+      >
+        {text}
+      </Button>
+    )
   }
 
   render() {
@@ -127,11 +141,19 @@ class User extends Component {
               {
                 isLogin &&
                 <View>
-                  {this.props.is_checked_in ? <View className="check-in">已签到</View> : (
-                    <Button className="phone" openType="getPhoneNumber" onGetPhoneNumber={this.onGetPhoneNumber}>
-                      每日签到
-                    </Button>
-                  )}
+                  {
+                    this.props.is_checked_in
+                      ? <View className="check-in">已签到</View>
+                      : this.props.user_phone
+                        ? <View className="check-in" onClick={this.checkin}>每日签到</View>
+                        : <Button
+                          className="phone"
+                          openType="getPhoneNumber"
+                          onGetPhoneNumber={this.onGetPhoneNumber}
+                        >
+                          每日签到
+                      </Button>
+                  }
                 </View>
               }
             </View>
@@ -154,7 +176,7 @@ class User extends Component {
           >
             <View className="left">
               <Image className="icon-left" src={order_img} />
-              <Text>我的订单</Text>
+              {this.renderText('order', '我的订单')}
             </View>
           </View>
           <View
@@ -164,7 +186,7 @@ class User extends Component {
           >
             <View className="left">
               <Image className="icon-left" src={change_img} />
-              <Text>我的福利</Text>
+              {this.renderText('score', '我的福利')}
             </View>
           </View>
           <View
@@ -174,7 +196,7 @@ class User extends Component {
           >
             <View className="left">
               <Image className="icon-left" src={address_img} />
-              <Text>收货地址</Text>
+              {this.renderText('addressList', '收货地址')}
             </View>
           </View>
           <View
@@ -184,7 +206,7 @@ class User extends Component {
           >
             <View className="left">
               <Image className="icon-left" src={follow_img} />
-              <Text>我的收藏</Text>
+              {this.renderText('watch', '我的收藏')}
             </View>
           </View>
           <View

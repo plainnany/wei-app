@@ -20,29 +20,29 @@
       // justify-content: space-between;
       .right {
         margin-left: 24px;
+        font-size: 38px;
         .check-in {
-          background-color: #ccc;
-          font-size: 20px;
+          background-color: #ddd;
+          font-size: 28px;
           padding: 8px 12px;
           border-radius: 6px;
           margin-top: 8px;
           text-align: center;
         }
         .phone {
-          background-color: #ccc;
-          padding: 8px 12px;
-          font-size: 20px;
+          background-color: #ddd;
+          padding: 8px 16px;
           border-radius: 6px;
           text-align: center;
           line-height: normal;
           margin: 0;
           margin-top: 8px;
+          font-size: 28px;
         }
 
         button {
           background-color: none;
           font-weight: normal;
-          font-size: 26px;
           color: inherit;
           &::after{
             content: '';
@@ -75,12 +75,12 @@
       }
       .avatar-container {
         border-radius: 50%;
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
         overflow: hidden;
         .avatar {
-          width: 120px;
-          height: 120px;
+          width: 140px;
+          height: 140px;
           object-fit: contain;
         }
       }
@@ -138,6 +138,7 @@
     margin: 24px 0;
     padding: 0 45px;
     background-color: #fff;
+    font-size: 30px;
 
     .card {
       width: 660px;
@@ -218,7 +219,7 @@
       .left {
         display: flex;
         align-items: center;
-        line-height: 100%;
+        width: 100%;
         span,
         text {
           margin-left: 20px;
@@ -250,4 +251,18 @@
 
 .score {
   // color: #ccc;
+}
+
+.clear {
+  background: #fff;
+  padding: 0;
+  margin-left: 20px;
+  font-size: 30px;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+  &::after {
+    display: none;
+  }
+
 }
