@@ -25,6 +25,10 @@ export default class MySwiper extends Component {
 
   componentDidMount() {
     this.getLinkDetail()
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   getLinkDetail = () => {

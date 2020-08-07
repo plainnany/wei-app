@@ -32,6 +32,11 @@ class ScorePage extends Component {
     this.props.dispatch({
       type: 'user/queryUser'
     })
+
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   };
 
   exchangeScore = v => {

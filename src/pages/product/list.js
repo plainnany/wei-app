@@ -24,6 +24,10 @@ class Index extends Component {
   componentDidMount() {
     const menu_id = this.$router.params.id;
     this.getProduct(menu_id);
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   componentWillUnmount() { }

@@ -25,6 +25,10 @@ class Index extends Component {
 
   componentDidMount() {
     this.getProduct();
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   componentWillUnmount() { }

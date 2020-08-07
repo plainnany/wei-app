@@ -16,6 +16,10 @@ class Addresslist extends Component {
     this.props.dispatch({
       type: 'user/queryUser',
     })
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   };
 
   componentDidShow = () => {
@@ -71,7 +75,7 @@ class Addresslist extends Component {
   };
 
   render() {
-    const { addressList } = this.props;
+    const { addressList, consignee_address } = this.props;
     return (
       <View className="addressList-page">
         {addressList.length > 0 ? (

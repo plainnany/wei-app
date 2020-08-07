@@ -28,6 +28,10 @@ class User extends Component {
         type: 'user/queryUser'
       })
     }
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   goToPage = e => {
@@ -145,13 +149,13 @@ class User extends Component {
                     this.props.is_checked_in
                       ? <View className="check-in">已签到</View>
                       : this.props.user_phone
-                        ? <View className="check-in" onClick={this.checkin}>每日签到</View>
+                        ? <View className="check-in" onClick={this.checkin}>每日签到领积分</View>
                         : <Button
                           className="phone"
                           openType="getPhoneNumber"
                           onGetPhoneNumber={this.onGetPhoneNumber}
                         >
-                          每日签到
+                          每日签到领积分
                       </Button>
                   }
                 </View>

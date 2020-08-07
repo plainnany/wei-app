@@ -18,6 +18,10 @@ class Addressupdate extends Component {
     //     send_cities: 0
     //   }
     // });
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   };
 
   // picker选择数据动态渲染

@@ -21,9 +21,12 @@ export default class Index extends Component {
 
   componentDidMount() {
     this.getProject(this.$router.params.name)
-    console.log()
     Taro.setNavigationBarTitle({
       title: this.$router.params.name
+    })
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
     })
   }
 

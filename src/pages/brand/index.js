@@ -24,6 +24,10 @@ export default class Index extends Component {
 
   componentDidMount() {
     this.handleTab(this.state.activeTab)
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   }
 
   componentWillUnmount() {

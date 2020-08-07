@@ -31,6 +31,11 @@ class ScorePage extends Component {
         loading: false
       })
     })
+
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   };
 
   render() {
