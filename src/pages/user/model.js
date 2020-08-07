@@ -99,6 +99,10 @@ export default {
           }
         })
       }
+      yield put({
+        type: 'save',
+        payload: { user_phone: user.user_phone }
+      })
     },
     *querySign(_, { call, put, select }) {
       const { open_id } = yield select(state => state.user)
