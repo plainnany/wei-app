@@ -87,7 +87,10 @@ export default class Index extends Component {
       parent_id: 1,
       image_type: 3
     })
-    this.setState({ loading: false, products: data.data })
+    this.setState({
+      loading: false,
+      products: data.data.sort((a, b) => a.parent_id - b.parent_id)
+    })
   }
 
   goToPage = (v, index) => {
@@ -98,7 +101,7 @@ export default class Index extends Component {
       if (this.state.activeTab === 'project') {
         name = v.image_name.split('.')[0]
       }
-      Taro.navigateTo({ url: `/pages/program/index?name=${name}&parent_id=${index + 1}` })
+      Taro.navigateTo({ url: `/pages/program/index?name=${name}&parent_id=${v.parent_id}` })
     }
   };
 

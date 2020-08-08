@@ -41,13 +41,13 @@ export default {
         parent_id: 2,
         image_type: 3
       })
-      const banner_list = banner_response.data
+      const banner_list = banner_response.data.sort((a, b) => a.parent_id - b.parent_id)
 
       const results = []
       for (let i = 0; i < banner_list.length; i++) {
         const res = yield call(homeApi.getNewProduct, {
           operator_mp: PARAMS.new,
-          parent_id: i + 1,
+          parent_id: banner_list[i].parent_id,
           image_type: 1
         })
         results.push({
