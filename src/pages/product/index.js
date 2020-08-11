@@ -87,7 +87,7 @@ class Index extends Component {
 
   goPageDetail = v => {
     Taro.navigateTo({
-      url: `/pages/product/list?id=${v.menu_id}`
+      url: `/pages/product/list?id=${v.menu_id}&title=${v.menu_name}`
     });
   };
 

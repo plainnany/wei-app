@@ -28,6 +28,7 @@ class Index extends Component {
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
+    Taro.setNavigationBarTitle({ title: this.$router.params.title })
   }
 
   componentWillUnmount() { }
@@ -35,10 +36,6 @@ class Index extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
-
-  config = {
-    navigationBarTitleText: "系列"
-  };
 
   handleTab = type => {
     this.setState({ activeTab: type });
