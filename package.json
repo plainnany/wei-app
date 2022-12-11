@@ -48,7 +48,7 @@
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.3",
+    "qs": "^6.5.3",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
